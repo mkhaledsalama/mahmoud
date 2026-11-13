@@ -1,0 +1,2559 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M&lt;&gt;S | Expert Systems Study &amp; Quiz Platform</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Cairo', 'sans-serif'],
+            arabic: ['Cairo', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            },
+            violetbrand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 50%, #f5f3ff 100%);
+      color: #1e293b;
+      min-height: 100vh;
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .study-card {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+    }
+    .study-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(37, 99, 235, 0.12), 0 4px 12px -4px rgba(124, 58, 237, 0.08);
+    }
+    .option-btn {
+      transition: all 0.18s ease;
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateX(3px);
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
+      box-shadow: 0 6px 18px -4px rgba(79, 70, 229, 0.45);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 50%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .primary-gradient-btn {
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 55%, #7c3aed 100%);
+      transition: all 0.2s ease;
+    }
+    .primary-gradient-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px -6px rgba(79, 70, 229, 0.45);
+    }
+    .explanation-enter {
+      animation: fadeSlideDown 0.24s ease-out forwards;
+    }
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Standalone Fallback Utilities for 100% reliability on Netlify & all networks */
+    .hidden { display: none !important; }
+    *, *::before, *::after { box-sizing: border-box; }
+    button { cursor: pointer; font-family: inherit; }
+    input, select { font-family: inherit; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- Top Sticky Header -->
+  <header class="sticky top-0 z-40 glass-header border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand Logo M<>S -->
+      <div class="flex items-center gap-3.5 cursor-pointer group" id="brandHomeBtn" title="M<>S Expert Systems Platform">
+        <div class="logo-badge px-3.5 py-2 rounded-2xl flex items-center justify-center text-white font-mono font-extrabold text-lg sm:text-xl tracking-tight select-none group-hover:scale-105 transition-transform">
+          <span>M</span><span class="text-sky-200 mx-0.5">&lt;&gt;</span><span>S</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900">Expert Systems Hub</h1>
+            <span class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+              Midterm Bank
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">Dr. Abdelsalam Helmy • 51 Verified Questions (MCQ &amp; True/False)</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs -->
+      <nav class="flex items-center bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80">
+        <button
+          type="button"
+          id="navBankBtn"
+          class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          <span>Questions Bank</span>
+          <span class="font-arabic text-xs font-semibold opacity-85 hidden sm:inline">(بنك الأسئلة)</span>
+        </button>
+
+        <button
+          type="button"
+          id="navQuizBtn"
+          class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-indigo-700"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Interactive Quiz</span>
+          <span class="font-arabic text-xs font-semibold opacity-85 hidden sm:inline">(اختبار تفاعلي)</span>
+        </button>
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 ml-1"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- ==================== PAGE 1: QUESTIONS BANK VIEW ==================== -->
+    <section id="bankView" class="space-y-6">
+
+      <!-- Hero Banner / Stats Summary -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+        <div class="space-y-1.5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200/60">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+            <span>Complete Midterm Questions Bank • 100% Source-Verified</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+            Expert Systems Questions Bank <span class="font-arabic text-base sm:text-lg font-bold text-indigo-600">(بنك أسئلة النظم الخبيرة)</span>
+          </h2>
+          <p class="text-sm text-slate-600 max-w-2xl font-arabic">
+            تصفح وراجع جميع الأسئلة المستخرجة من ملف المحاضرة (40 سؤال اختيار من متعدد MCQ + 11 سؤال صح وخطأ True/False). يمكنك تجربة الإجابة بنفسك أو الضغط على <strong>Show Answer</strong> لإظهار الإجابة الصحيحة والشرح التفصيلي.
+          </p>
+        </div>
+
+        <!-- Quick Stat Pills -->
+        <div class="grid grid-cols-3 sm:flex items-center gap-3 shrink-0">
+          <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+            <div class="text-xl sm:text-2xl font-extrabold text-blue-600">40</div>
+            <div class="text-xs font-semibold text-slate-500">MCQ Questions</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+            <div class="text-xl sm:text-2xl font-extrabold text-purple-600">11</div>
+            <div class="text-xs font-semibold text-slate-500">True / False</div>
+          </div>
+          <div class="bg-indigo-50/70 border border-indigo-200/70 rounded-2xl px-4 py-3 text-center">
+            <div class="text-xl sm:text-2xl font-extrabold text-indigo-700" id="statBookmarkedCount">0</div>
+            <div class="text-xs font-semibold text-indigo-600 font-arabic">أسئلة محفوظة ★</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter, Search & Global Actions Bar -->
+      <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/80 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <!-- Section Filter Tabs (All, MCQ, True/False, Bookmarked) -->
+          <div class="flex flex-wrap items-center gap-2" id="bankCategoryTabs">
+            <button
+              type="button"
+              data-bank-filter="ALL"
+              class="bank-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-indigo-600 text-white shadow-sm"
+            >
+              All Questions (51)
+            </button>
+            <button
+              type="button"
+              data-bank-filter="MCQ"
+              class="bank-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-700"
+            >
+              MCQ Section (40)
+            </button>
+            <button
+              type="button"
+              data-bank-filter="TF"
+              class="bank-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-slate-100 text-slate-700 hover:bg-purple-50 hover:text-purple-700"
+            >
+              True / False Section (11)
+            </button>
+            <button
+              type="button"
+              data-bank-filter="BOOKMARKED"
+              class="bank-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-slate-100 text-slate-700 hover:bg-amber-50 hover:text-amber-700"
+            >
+              ★ Bookmarked (<span id="tabBookmarkCount">0</span>)
+            </button>
+          </div>
+
+          <!-- Global Show / Hide Answers & Reset Practice Buttons -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              id="showAllAnswersBtn"
+              class="px-3.5 py-2 rounded-xl text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200/70 transition-all flex items-center gap-1.5"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <span>Show All Answers</span>
+            </button>
+            <button
+              type="button"
+              id="hideAllAnswersBtn"
+              class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 transition-all flex items-center gap-1.5"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M3 3l18 18" />
+              </svg>
+              <span>Hide All Answers</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search Input & Topic Filter Row -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 pt-1">
+          <div class="md:col-span-7 relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              id="bankSearchInput"
+              placeholder="Search by question number (e.g. Q19, TF3) or keyword (e.g. Forward Chaining, Frame, Agenda)..."
+              class="w-full pl-10 pr-9 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
+            />
+            <button
+              type="button"
+              id="clearSearchBtn"
+              class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold px-1.5 py-0.5"
+              title="Clear search"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="md:col-span-5">
+            <select
+              id="topicFilterSelect"
+              aria-label="Filter by topic"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
+            >
+              <option value="ALL">All Topics (جميع مواضيع المنهج)</option>
+              <option value="Architecture & Components">1. Architecture &amp; Components (مكونات النظم الخبيرة)</option>
+              <option value="Knowledge Acquisition">2. Knowledge Acquisition (اكتساب المعرفة)</option>
+              <option value="Forward & Backward Chaining">3. Forward &amp; Backward Chaining (الاستدلال الأمامي والخلفي)</option>
+              <option value="Frames & Logic Representation">4. Frames &amp; Logic Representation (الإطارات والتمثيل المنطقي)</option>
+              <option value="Rule Matching & Conflict Resolution">5. Rule Matching &amp; Conflict Resolution (المطابقة وفض التعارض)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supplemental PDF Pages 7-8 Collapsible Reference Card -->
+      <div class="bg-gradient-to-r from-indigo-50/90 via-blue-50/90 to-purple-50/90 rounded-2xl border border-indigo-200/70 p-4 sm:p-5">
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-bold font-mono">PDF p.7–8</span>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">
+                Bonus Lecture Notes: Answer Key &amp; Explanations (ملاحظات إضافية في ملف الـ PDF ص 7–8)
+              </h3>
+              <p class="text-xs text-slate-600">
+                Contains 5 extra concept explanations included on slides 7 &amp; 8 of the PDF (including MYCIN &amp; Expert System limitations).
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="toggleBonusNotesBtn"
+            class="px-3.5 py-2 rounded-xl text-xs font-bold bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 transition-all shadow-sm"
+          >
+            Show PDF Slides 7–8 Notes ▼
+          </button>
+        </div>
+
+        <div id="bonusNotesContent" class="hidden mt-4 pt-4 border-t border-indigo-200/60 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="bg-white/90 rounded-xl p-3.5 border border-indigo-100 text-xs space-y-1">
+            <div class="font-bold text-indigo-800">1. B) Knowledge Base</div>
+            <p class="text-slate-600"><strong>Explanation:</strong> Correct! The knowledge base is the repository that contains the domain-specific expertise, structured as facts and production rules.</p>
+          </div>
+          <div class="bg-white/90 rounded-xl p-3.5 border border-indigo-100 text-xs space-y-1">
+            <div class="font-bold text-indigo-800">2. A) Forward chaining</div>
+            <p class="text-slate-600"><strong>Explanation:</strong> Correct! Forward chaining works in a bottom-up, data-driven manner, starting from available facts and applying rules to derive new conclusions.</p>
+          </div>
+          <div class="bg-white/90 rounded-xl p-3.5 border border-indigo-100 text-xs space-y-1">
+            <div class="font-bold text-indigo-800">3. C) Diagnosing bacterial infections and recommending antibiotic treatments (MYCIN)</div>
+            <p class="text-slate-600"><strong>Explanation:</strong> Correct! MYCIN was designed to identify bacteria causing severe infections (such as bacteremia and meningitis) and recommend tailored antibiotic regimens using certainty factors.</p>
+          </div>
+          <div class="bg-white/90 rounded-xl p-3.5 border border-indigo-100 text-xs space-y-1">
+            <div class="font-bold text-indigo-800">4. C) To control the search strategy and apply rules from the knowledge base to the current data</div>
+            <p class="text-slate-600"><strong>Explanation:</strong> Correct! The inference engine controls the control mechanism (like forward or backward chaining) to match rules against facts and deduce new information.</p>
+          </div>
+          <div class="bg-white/90 rounded-xl p-3.5 border border-indigo-100 text-xs space-y-1 md:col-span-2">
+            <div class="font-bold text-indigo-800">5. C) They lack general common-sense reasoning and cannot autonomously learn or extrapolate beyond explicit rules</div>
+            <p class="text-slate-600"><strong>Explanation:</strong> Correct! Classic expert systems are brittle outside their encoded domain because they lack broad common sense and inductive machine learning capabilities.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Counter Info -->
+      <div class="flex items-center justify-between px-1 text-xs sm:text-sm text-slate-600 font-medium">
+        <div id="bankResultsSummary">Showing all 51 questions</div>
+        <div class="font-arabic text-xs text-slate-500">اضغط على أي اختيار للتجربة الفورية أو زر Show Answer لعرض الإجابة والشرح</div>
+      </div>
+
+      <!-- Questions List Container -->
+      <div id="bankQuestionsContainer" class="space-y-4"></div>
+
+    </section>
+
+    <!-- ==================== PAGE 2: INTERACTIVE QUIZ VIEW ==================== -->
+    <section id="quizView" class="hidden space-y-6">
+
+      <!-- 2A. QUIZ SETUP SCREEN -->
+      <div id="quizSetupPanel" class="max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
+        <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-5">
+          <div class="space-y-1.5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-bold border border-purple-200/60">
+              <span>Smart Randomizer Engine • Anti-Memorization Mode</span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900">
+              Configure Your Practice Quiz <span class="font-arabic text-lg text-indigo-600">(إعداد الاختبار التفاعلي)</span>
+            </h2>
+            <p class="text-sm text-slate-600 font-arabic">
+              يتم تغيير ترتيب الأسئلة وترتيب الاختيارات <strong>(A, B, C, D)</strong> عشوائيًا في كل محاولة مع الحفاظ الدقيق على ارتباط كل إجابة بالسؤال الصحيح، لضمان الفهم الحقيقي دون حفظ أماكن الإجابات.
+            </p>
+          </div>
+          <div class="logo-badge px-3 py-2 rounded-2xl text-white font-mono font-extrabold text-sm shrink-0">
+            M&lt;&gt;S
+          </div>
+        </div>
+
+        <!-- Step 1: Select Question Type -->
+        <div class="space-y-3">
+          <label class="block text-sm font-extrabold text-slate-800">
+            1. Question Type <span class="font-arabic font-semibold text-slate-500">(نوع الأسئلة في الاختبار)</span>
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="quizTypeSelector">
+            <button
+              type="button"
+              data-quiz-type="ALL"
+              class="quiz-type-btn p-4 rounded-2xl border-2 border-indigo-600 bg-indigo-50/60 text-left transition-all"
+            >
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-extrabold text-sm text-indigo-950">Both (MCQ + T/F)</span>
+                <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-600 text-white">51 Qs</span>
+              </div>
+              <p class="text-xs text-slate-600 font-arabic">شامل الاختيار من متعدد والصح والخطأ معًا</p>
+            </button>
+
+            <button
+              type="button"
+              data-quiz-type="MCQ"
+              class="quiz-type-btn p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-300 text-left transition-all"
+            >
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-extrabold text-sm text-slate-900">MCQ Only</span>
+                <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700">40 Qs</span>
+              </div>
+              <p class="text-xs text-slate-600 font-arabic">أسئلة الاختيار من متعدد فقط (Q1–Q40)</p>
+            </button>
+
+            <button
+              type="button"
+              data-quiz-type="TF"
+              class="quiz-type-btn p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-purple-300 text-left transition-all"
+            >
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-extrabold text-sm text-slate-900">True / False Only</span>
+                <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700">11 Qs</span>
+              </div>
+              <p class="text-xs text-slate-600 font-arabic">أسئلة الصح والخطأ فقط (TF1–TF11)</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Select Number of Questions -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label for="quizCountInput" class="block text-sm font-extrabold text-slate-800">
+              2. Number of Questions <span class="font-arabic font-semibold text-slate-500">(عدد الأسئلة المطلوبة)</span>
+            </label>
+            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200/60" id="availablePoolBadge">
+              Max Available: 51 Questions
+            </span>
+          </div>
+
+          <!-- Preset Count Buttons -->
+          <div class="flex flex-wrap items-center gap-2" id="quizCountPresets">
+            <button type="button" data-count-preset="5" class="count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all">5 Questions</button>
+            <button type="button" data-count-preset="10" class="count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all">10 Questions</button>
+            <button type="button" data-count-preset="15" class="count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all">15 Questions</button>
+            <button type="button" data-count-preset="20" class="count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all">20 Questions</button>
+            <button type="button" data-count-preset="30" class="count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all">30 Questions</button>
+            <button type="button" data-count-preset="ALL" class="count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all">All Available (الكل)</button>
+          </div>
+
+          <!-- Custom Slider + Number Input -->
+          <div class="flex items-center gap-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
+            <input
+              type="range"
+              id="quizCountSlider"
+              min="1"
+              max="51"
+              value="10"
+              class="w-full accent-indigo-600 cursor-pointer"
+            />
+            <div class="flex items-center gap-1.5 shrink-0">
+              <input
+                type="number"
+                id="quizCountInput"
+                min="1"
+                max="51"
+                value="10"
+                class="w-16 text-center font-mono font-bold text-sm py-1.5 px-2 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <span class="text-xs font-bold text-slate-500">Qs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Rules Summary Box -->
+        <div class="bg-blue-50/70 border border-blue-200/70 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
+          <div class="flex items-start gap-2.5">
+            <span class="text-blue-600 font-bold text-sm">✓</span>
+            <span class="font-arabic"><strong>عشوائية كاملة:</strong> يتم خلط ترتيب الأسئلة وخلط اختيارات (A, B, C, D) في كل محاولة.</span>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-blue-600 font-bold text-sm">✓</span>
+            <span class="font-arabic"><strong>إخفاء الإجابات أثناء الحل:</strong> لا تظهر الإجابة الصحيحة إلا بعد إنهاء الاختبار.</span>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-blue-600 font-bold text-sm">✓</span>
+            <span class="font-arabic"><strong>حرية التنقل:</strong> أزرار Next و Previous وشريط أرقام الأسئلة للمراجعة قبل التسليم.</span>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="text-blue-600 font-bold text-sm">✓</span>
+            <span class="font-arabic"><strong>تقرير شامل:</strong> عرض النتيجة النهائية وتصحيح كل سؤال مع الشرح الكامل.</span>
+          </div>
+        </div>
+
+        <!-- Start Quiz CTA -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-slate-500" id="lastAttemptSummaryText">
+            Ready to generate a fresh randomized exam session.
+          </div>
+          <button
+            type="button"
+            id="startQuizBtn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl text-white font-extrabold text-sm sm:text-base primary-gradient-btn flex items-center justify-center gap-2 shadow-md"
+          >
+            <span>Start Randomized Quiz</span>
+            <span class="font-arabic text-sm">(ابدأ الاختبار الآن)</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2B. ACTIVE QUIZ SCREEN -->
+      <div id="quizActivePanel" class="hidden max-w-4xl mx-auto space-y-5">
+
+        <!-- Top Quiz Status Bar -->
+        <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/80 shadow-sm space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 rounded-xl bg-indigo-600 text-white font-mono font-extrabold text-xs sm:text-sm" id="quizProgressBadge">
+                Question 1 / 10
+              </span>
+              <span class="px-3 py-1 rounded-xl bg-slate-100 text-slate-700 font-semibold text-xs" id="quizAnsweredCountBadge">
+                Answered: 0 / 10
+              </span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-50 text-blue-700 font-mono text-xs font-bold border border-blue-200/60">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span id="quizTimerDisplay">00:00</span>
+              </div>
+
+              <button
+                type="button"
+                id="quitQuizToSetupBtn"
+                class="px-3 py-1 rounded-xl text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 transition-all"
+              >
+                Exit Quiz ✕
+              </button>
+            </div>
+          </div>
+
+          <!-- Smooth Progress Bar -->
+          <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div id="quizProgressBar" class="h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 transition-all duration-300" style="width: 10%"></div>
+          </div>
+
+          <!-- Numbered Question Navigator Pills -->
+          <div class="pt-1 flex items-center gap-1.5 overflow-x-auto pb-1" id="quizQuestionPills"></div>
+        </div>
+
+        <!-- Active Question Card -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="flex items-center gap-2">
+              <span id="activeQTypeBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                MCQ
+              </span>
+              <span id="activeQSourceId" class="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-slate-100 text-slate-600">
+                Source: Q1 (PDF p.2)
+              </span>
+            </div>
+            <span class="text-xs text-slate-400 font-arabic">
+              اختر الإجابة المناسبة (لن تظهر صحة الإجابة إلا بعد إنهاء الاختبار)
+            </span>
+          </div>
+
+          <!-- Question Text -->
+          <div id="activeQuestionText" class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed whitespace-pre-line"></div>
+
+          <!-- Shuffled Options Container (A, B, C, D) -->
+          <div id="activeOptionsContainer" class="space-y-3"></div>
+
+          <!-- Bottom Navigation Bar (Previous, Next, Finish Quiz) -->
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+            <button
+              type="button"
+              id="prevQuestionBtn"
+              class="px-5 py-2.5 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-40 disabled:pointer-events-none transition-all flex items-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Previous (السابق)</span>
+            </button>
+
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                id="nextQuestionBtn"
+                class="px-5 py-2.5 rounded-xl text-sm font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200/80 transition-all flex items-center gap-2"
+              >
+                <span>Next (التالي)</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                id="submitQuizBtn"
+                class="px-6 py-2.5 rounded-xl text-sm font-extrabold text-white primary-gradient-btn shadow-sm flex items-center gap-2"
+              >
+                <span>Finish Quiz (إنهاء الاختبار)</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2C. QUIZ RESULTS & DETAILED EXPLANATION SCREEN -->
+      <div id="quizResultsPanel" class="hidden max-w-5xl mx-auto space-y-6">
+
+        <!-- Score Summary Hero Card -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-2 text-center md:text-left">
+              <div id="resultGradeBadge" class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                Quiz Completed
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                Your Final Quiz Result <span class="font-arabic text-xl text-indigo-600">(نتيجة الاختبار النهائية)</span>
+              </h2>
+              <p id="resultSummaryMessage" class="text-sm text-slate-600 font-arabic"></p>
+            </div>
+
+            <!-- Circular / Big Percentage Display -->
+            <div class="flex items-center gap-5 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-6 py-4 rounded-3xl border border-indigo-200/70">
+              <div class="text-center">
+                <div id="resultPercentageText" class="text-3xl sm:text-4xl font-extrabold gradient-text font-mono">100%</div>
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Final Score</div>
+              </div>
+              <div class="h-12 w-px bg-indigo-200/80"></div>
+              <div class="space-y-1 text-xs font-bold">
+                <div class="text-emerald-700 flex items-center gap-1.5">
+                  <span>✓ Correct:</span>
+                  <span id="resultCorrectCount" class="font-mono">0</span>
+                </div>
+                <div class="text-rose-600 flex items-center gap-1.5">
+                  <span>✕ Incorrect:</span>
+                  <span id="resultWrongCount" class="font-mono">0</span>
+                </div>
+                <div class="text-amber-600 flex items-center gap-1.5">
+                  <span>○ Unanswered:</span>
+                  <span id="resultUnansweredCount" class="font-mono">0</span>
+                </div>
+                <div class="text-slate-500 flex items-center gap-1.5">
+                  <span>⏱ Time:</span>
+                  <span id="resultTimeSpent" class="font-mono">00:00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons: Retry with New Random Order or Change Settings -->
+          <div class="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2" id="resultFilterTabs">
+              <button
+                type="button"
+                data-result-filter="ALL"
+                class="result-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all"
+              >
+                All Reviewed Questions
+              </button>
+              <button
+                type="button"
+                data-result-filter="WRONG"
+                class="result-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-rose-50 hover:text-rose-700 transition-all"
+              >
+                Incorrect / Unanswered Only (الأخطاء فقط)
+              </button>
+              <button
+                type="button"
+                data-result-filter="CORRECT"
+                class="result-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-all"
+              >
+                Correct Only (الإجابات الصحيحة)
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                id="retrySameConfigBtn"
+                class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold text-white primary-gradient-btn shadow-sm flex items-center gap-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Retry Quiz with New Random Order (إعادة بترتيب جديد)</span>
+              </button>
+
+              <button
+                type="button"
+                id="newQuizSetupBtn"
+                class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 transition-all"
+              >
+                Change Quiz Settings (تغيير الإعدادات)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Review Cards List -->
+        <div id="quizReviewContainer" class="space-y-4"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- In-Page Confirmation Modal for Unanswered Questions (No native confirm/alert) -->
+  <div id="submitConfirmModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border border-slate-200 shadow-xl space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-extrabold text-lg shrink-0">
+          !
+        </div>
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">Unanswered Questions Remaining</h3>
+          <p class="text-xs text-slate-500 font-arabic">يوجد أسئلة لم تقم بالإجابة عليها بعد</p>
+        </div>
+      </div>
+      <p id="modalUnansweredMessage" class="text-sm text-slate-600 leading-relaxed font-arabic"></p>
+      <div class="flex items-center justify-end gap-2.5 pt-2">
+        <button
+          type="button"
+          id="cancelSubmitModalBtn"
+          class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all"
+        >
+          Return to Quiz (العودة للاختبار)
+        </button>
+        <button
+          type="button"
+          id="confirmSubmitModalBtn"
+          class="px-5 py-2 rounded-xl text-xs font-extrabold text-white primary-gradient-btn shadow-sm"
+        >
+          Submit Anyway (إنهاء وعرض النتيجة)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-8 border-t border-slate-200/70 text-center sm:flex items-center justify-between text-xs text-slate-500 space-y-2 sm:space-y-0">
+    <div class="flex items-center justify-center gap-2">
+      <span class="px-2 py-0.5 rounded-lg logo-badge text-white font-mono font-bold text-xs">M&lt;&gt;S</span>
+      <span class="font-semibold text-slate-700">Expert Systems Interactive Study Platform</span>
+    </div>
+    <div>
+      Source: <span class="font-semibold text-slate-700">Expert Systems Midterm Questions Bank — Dr. Abdelsalam Helmy</span> (All 51 Questions)
+    </div>
+  </footer>
+
+  <!-- Application Logic & Source-Verified Question Database -->
+  <script>
+    // =========================================================================
+    // 1. COMPLETE VERIFIED QUESTIONS BANK FROM ATTACHED PDF (51 QUESTIONS)
+    //    40 Multiple Choice Questions (Q1-Q40) + 11 True/False Questions (TF1-TF11)
+    // =========================================================================
+    const QUESTIONS_DATA = [
+      // -------------------- MCQ SECTION (Q1 - Q40) --------------------
+      {
+        id: "Q1",
+        num: 1,
+        type: "MCQ",
+        page: 2,
+        topic: "Architecture & Components",
+        question: "An expert system is primarily designed to:",
+        options: [
+          { id: "Q1_A", origLetter: "A", text: "Replace all computer operating systems", isCorrect: false },
+          { id: "Q1_B", origLetter: "B", text: "Solve complex problems in a specific domain at an expert level", isCorrect: true },
+          { id: "Q1_C", origLetter: "C", text: "Store large amounts of data without processing", isCorrect: false },
+          { id: "Q1_D", origLetter: "D", text: "Perform only mathematical calculations", isCorrect: false }
+        ],
+        explanation: "An expert system is primarily designed to solve complex problems in a specific domain at an expert level (PDF p. 2: Q1. B. Solve complex problems in a specific domain at an expert level)."
+      },
+      {
+        id: "Q2",
+        num: 2,
+        type: "MCQ",
+        page: 3,
+        topic: "Architecture & Components",
+        question: "Which of the following is NOT one of the three key components of an expert system?",
+        options: [
+          { id: "Q2_A", origLetter: "A", text: "Knowledge Base", isCorrect: false },
+          { id: "Q2_B", origLetter: "B", text: "Inference Engine", isCorrect: false },
+          { id: "Q2_C", origLetter: "C", text: "User Interface", isCorrect: false },
+          { id: "Q2_D", origLetter: "D", text: "Network Router", isCorrect: true }
+        ],
+        explanation: "The three key components of an expert system are the Knowledge Base, Inference Engine, and User Interface. Network Router is NOT one of them (PDF p. 3: Q2. D. Network Router)."
+      },
+      {
+        id: "Q3",
+        num: 3,
+        type: "MCQ",
+        page: 4,
+        topic: "Architecture & Components",
+        question: "A medical expert system stores diagnostic rules collected from experienced doctors. Which component stores these rules?",
+        options: [
+          { id: "Q3_A", origLetter: "A", text: "User Interface", isCorrect: false },
+          { id: "Q3_B", origLetter: "B", text: "Knowledge Base", isCorrect: true },
+          { id: "Q3_C", origLetter: "C", text: "Inference Engine", isCorrect: false },
+          { id: "Q3_D", origLetter: "D", text: "Agenda", isCorrect: false }
+        ],
+        explanation: "The knowledge base is the repository that contains the domain-specific expertise, structured as facts and production rules."
+      },
+      {
+        id: "Q4",
+        num: 4,
+        type: "MCQ",
+        page: 5,
+        topic: "Architecture & Components",
+        question: "Which component is responsible for applying IF–THEN rules to reach conclusions?",
+        options: [
+          { id: "Q4_A", origLetter: "A", text: "Working Memory", isCorrect: false },
+          { id: "Q4_B", origLetter: "B", text: "User Interface", isCorrect: false },
+          { id: "Q4_C", origLetter: "C", text: "Inference Engine", isCorrect: true },
+          { id: "Q4_D", origLetter: "D", text: "Knowledge Acquisition Facility", isCorrect: false }
+        ],
+        explanation: "The inference engine controls the control mechanism (like forward or backward chaining) to match rules against facts and deduce new information."
+      },
+      {
+        id: "Q5",
+        num: 5,
+        type: "MCQ",
+        page: 6,
+        topic: "Knowledge Acquisition",
+        question: "The process of constructing an expert system using specialized domain knowledge is called:",
+        options: [
+          { id: "Q5_A", origLetter: "A", text: "Data Mining", isCorrect: false },
+          { id: "Q5_B", origLetter: "B", text: "Knowledge Engineering", isCorrect: true },
+          { id: "Q5_C", origLetter: "C", text: "Network Engineering", isCorrect: false },
+          { id: "Q5_D", origLetter: "D", text: "Software Encryption", isCorrect: false }
+        ],
+        explanation: "Knowledge Engineering is the process of constructing an expert system using specialized domain knowledge. The knowledge base is the repository that contains the domain-specific expertise, structured as facts and production rules."
+      },
+      {
+        id: "Q6",
+        num: 6,
+        type: "MCQ",
+        page: 9,
+        topic: "Architecture & Components",
+        question: "A company needs software that can suggest solutions to complicated problems without an efficient algorithmic solution. Why might an expert system be appropriate?",
+        options: [
+          { id: "Q6_A", origLetter: "A", text: "It eliminates the need for knowledge", isCorrect: false },
+          { id: "Q6_B", origLetter: "B", text: "It only handles structured numerical problems", isCorrect: false },
+          { id: "Q6_C", origLetter: "C", text: "It can use expert knowledge to solve some ill-structured problems", isCorrect: true },
+          { id: "Q6_D", origLetter: "D", text: "It guarantees perfect solutions in every situation", isCorrect: false }
+        ],
+        explanation: "An expert system is appropriate when there is no efficient algorithmic solution because it uses heuristic domain-expert knowledge to tackle ill-structured problems (Note: PDF slide 9 has a truncated red answer line repeating the question stem, while Option C is the accurate domain statement)."
+      },
+      {
+        id: "Q7",
+        num: 7,
+        type: "MCQ",
+        page: 10,
+        topic: "Architecture & Components",
+        question: "Which of the following is a characteristic of expert systems?",
+        options: [
+          { id: "Q7_A", origLetter: "A", text: "Low reliability", isCorrect: false },
+          { id: "Q7_B", origLetter: "B", text: "High responsiveness", isCorrect: true },
+          { id: "Q7_C", origLetter: "C", text: "Inability to explain results", isCorrect: false },
+          { id: "Q7_D", origLetter: "D", text: "Dependence on random decisions", isCorrect: false }
+        ],
+        explanation: "Expert systems are designed to provide quick, reliable, and consistent expert-level advice without fatigue."
+      },
+      {
+        id: "Q8",
+        num: 8,
+        type: "MCQ",
+        page: 11,
+        topic: "Architecture & Components",
+        question: "Hybrid expert systems may combine classical expert-system techniques with:",
+        options: [
+          { id: "Q8_A", origLetter: "A", text: "Artificial Neural Networks and Genetic Algorithms", isCorrect: true },
+          { id: "Q8_B", origLetter: "B", text: "Only database management systems", isCorrect: false },
+          { id: "Q8_C", origLetter: "C", text: "Computer hardware components", isCorrect: false },
+          { id: "Q8_D", origLetter: "D", text: "Network communication protocols", isCorrect: false }
+        ],
+        explanation: "Hybrid expert systems integrate classic rule-based reasoning with soft computing techniques like neural networks (for pattern recognition) and genetic algorithms (for optimization)."
+      },
+      {
+        id: "Q9",
+        num: 9,
+        type: "MCQ",
+        page: 12,
+        topic: "Architecture & Components",
+        question: "A user enters symptoms into an expert system and receives diagnostic questions and recommendations. Which component enables communication between the user and the system?",
+        options: [
+          { id: "Q9_A", origLetter: "A", text: "Knowledge Base", isCorrect: false },
+          { id: "Q9_B", origLetter: "B", text: "Inference Engine", isCorrect: false },
+          { id: "Q9_C", origLetter: "C", text: "User Interface", isCorrect: true },
+          { id: "Q9_D", origLetter: "D", text: "Working Memory", isCorrect: false }
+        ],
+        explanation: "The User Interface is the component that captures input from the user (such as symptoms) and displays the system's output (questions and recommendations)."
+      },
+      {
+        id: "Q10",
+        num: 10,
+        type: "MCQ",
+        page: 13,
+        topic: "Architecture & Components",
+        question: "Which statement correctly describes the two main components of an expert system's kernel?",
+        options: [
+          { id: "Q10_A", origLetter: "A", text: "Knowledge Base stores domain knowledge, while Inference Engine performs reasoning", isCorrect: true },
+          { id: "Q10_B", origLetter: "B", text: "Knowledge Base executes rules, while Inference Engine collects user input", isCorrect: false },
+          { id: "Q10_C", origLetter: "C", text: "Both components perform exactly the same function", isCorrect: false },
+          { id: "Q10_D", origLetter: "D", text: "Inference Engine stores all expert knowledge without using rules", isCorrect: false }
+        ],
+        explanation: "The core kernel of an expert system relies on this clear separation: the Knowledge Base contains the rules/facts, and the Inference Engine applies logical reasoning to them."
+      },
+      {
+        id: "Q11",
+        num: 11,
+        type: "MCQ",
+        page: 14,
+        topic: "Architecture & Components",
+        question: "Which component stores the current facts used by the rules during problem-solving?",
+        options: [
+          { id: "Q11_A", origLetter: "A", text: "Explanation Facility", isCorrect: false },
+          { id: "Q11_B", origLetter: "B", text: "Working Memory", isCorrect: true },
+          { id: "Q11_C", origLetter: "C", text: "Knowledge Acquisition Facility", isCorrect: false },
+          { id: "Q11_D", origLetter: "D", text: "User Interface", isCorrect: false }
+        ],
+        explanation: "Working Memory holds the current known facts and session-specific state data that the rules evaluate."
+      },
+      {
+        id: "Q12",
+        num: 12,
+        type: "MCQ",
+        page: 15,
+        topic: "Architecture & Components",
+        question: "A user asks an expert system why it recommended a particular diagnosis. Which component should provide the reasoning?",
+        options: [
+          { id: "Q12_A", origLetter: "A", text: "Agenda", isCorrect: false },
+          { id: "Q12_B", origLetter: "B", text: "Working Memory", isCorrect: false },
+          { id: "Q12_C", origLetter: "C", text: "Explanation Facility", isCorrect: true },
+          { id: "Q12_D", origLetter: "D", text: "Knowledge Base", isCorrect: false }
+        ],
+        explanation: "The Explanation Facility is built exactly for this purpose—to show the user the chain of logic or rules used to arrive at a conclusion."
+      },
+      {
+        id: "Q13",
+        num: 13,
+        type: "MCQ",
+        page: 16,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "What is the main purpose of the Agenda in an expert system?",
+        options: [
+          { id: "Q13_A", origLetter: "A", text: "Store historical user conversations", isCorrect: false },
+          { id: "Q13_B", origLetter: "B", text: "Maintain a prioritized list of rules whose conditions are satisfied", isCorrect: true },
+          { id: "Q13_C", origLetter: "C", text: "Replace the inference engine", isCorrect: false },
+          { id: "Q13_D", origLetter: "D", text: "Collect knowledge from human experts", isCorrect: false }
+        ],
+        explanation: "The Agenda acts as a dynamic queue containing all rules that are ready to fire, helping the inference engine decide which rule to execute next (conflict resolution)."
+      },
+      {
+        id: "Q14",
+        num: 14,
+        type: "MCQ",
+        page: 17,
+        topic: "Knowledge Acquisition",
+        question: "During knowledge acquisition, an expert is asked specific prepared questions about a problem domain. Which technique is being used?",
+        options: [
+          { id: "Q14_A", origLetter: "A", text: "Unstructured Interview", isCorrect: false },
+          { id: "Q14_B", origLetter: "B", text: "Structured Interview", isCorrect: true },
+          { id: "Q14_C", origLetter: "C", text: "Retrospective Protocol Analysis", isCorrect: false },
+          { id: "Q14_D", origLetter: "D", text: "Card Sorting", isCorrect: false }
+        ],
+        explanation: "Using specific, pre-planned questions to systematically gather knowledge from a domain expert defines a structured interview."
+      },
+      {
+        id: "Q15",
+        num: 15,
+        type: "MCQ",
+        page: 18,
+        topic: "Knowledge Acquisition",
+        question: "A knowledge engineer records an expert solving a problem and later plays the recording to ask the expert to explain their thoughts. This is:",
+        options: [
+          { id: "Q15_A", origLetter: "A", text: "Concurrent Protocol Analysis", isCorrect: false },
+          { id: "Q15_B", origLetter: "B", text: "Structured Interview", isCorrect: false },
+          { id: "Q15_C", origLetter: "C", text: "Retrospective Protocol Analysis", isCorrect: true },
+          { id: "Q15_D", origLetter: "D", text: "Forward Chaining", isCorrect: false }
+        ],
+        explanation: "Because the expert explains their thought process after the problem-solving session while reviewing a recording, it is a retrospective (looking back) protocol analysis."
+      },
+      {
+        id: "Q16",
+        num: 16,
+        type: "MCQ",
+        page: 19,
+        topic: "Forward & Backward Chaining",
+        question: "Which statement best describes Forward Chaining?",
+        options: [
+          { id: "Q16_A", origLetter: "A", text: "It begins with a hypothesis and searches backward for evidence", isCorrect: false },
+          { id: "Q16_B", origLetter: "B", text: "It starts with known facts and applies rules to derive conclusions", isCorrect: true },
+          { id: "Q16_C", origLetter: "C", text: "It ignores initial facts", isCorrect: false },
+          { id: "Q16_D", origLetter: "D", text: "It executes rules without checking conditions", isCorrect: false }
+        ],
+        explanation: "Forward chaining is a bottom-up, data-driven approach that moves from existing data toward a final goal."
+      },
+      {
+        id: "Q17",
+        num: 17,
+        type: "MCQ",
+        page: 20,
+        topic: "Forward & Backward Chaining",
+        question: "An expert system is designed to monitor thousands of incoming sensor readings and generate alerts whenever certain conditions occur. Which reasoning approach is most suitable?",
+        options: [
+          { id: "Q17_A", origLetter: "A", text: "Backward Chaining", isCorrect: false },
+          { id: "Q17_B", origLetter: "B", text: "Forward Chaining", isCorrect: true },
+          { id: "Q17_C", origLetter: "C", text: "Retrospective Analysis", isCorrect: false },
+          { id: "Q17_D", origLetter: "D", text: "Structured Interviewing", isCorrect: false }
+        ],
+        explanation: "For real-time monitoring and event-driven data (like sensor streams), forward chaining is ideal because it reacts immediately to new incoming facts to trigger updates or alerts."
+      },
+      {
+        id: "Q18",
+        num: 18,
+        type: "MCQ",
+        page: 21,
+        topic: "Forward & Backward Chaining",
+        question: "A technician wants to determine whether a machine has a specific electrical fault. The expert system begins with that hypothesis and checks the required evidence. This represents:",
+        options: [
+          { id: "Q18_A", origLetter: "A", text: "Forward Chaining", isCorrect: false },
+          { id: "Q18_B", origLetter: "B", text: "Knowledge Acquisition", isCorrect: false },
+          { id: "Q18_C", origLetter: "C", text: "Backward Chaining", isCorrect: true },
+          { id: "Q18_D", origLetter: "D", text: "Conflict Resolution", isCorrect: false }
+        ],
+        explanation: "Backward chaining is a goal-driven reasoning strategy. It always begins with a specific hypothesis or goal (the \"electrical fault\") and works backward through the rules to check if the necessary evidence exists to support that conclusion."
+      },
+      {
+        id: "Q19",
+        num: 19,
+        type: "MCQ",
+        page: 22,
+        topic: "Forward & Backward Chaining",
+        question: "Consider the following rules:\n• Rule 1: IF cart total is greater than $100, THEN Big Spender = True.\n• Rule 2: IF Big Spender = True AND Loyalty Member = True, THEN apply a 20% discount.\nInitial facts: Cart Total = $120 and Loyalty Member = True.\nWhat is the final conclusion using Forward Chaining?",
+        options: [
+          { id: "Q19_A", origLetter: "A", text: "No discount is applied", isCorrect: false },
+          { id: "Q19_B", origLetter: "B", text: "Only the Big Spender tag is generated", isCorrect: false },
+          { id: "Q19_C", origLetter: "C", text: "A 20% discount is applied", isCorrect: true },
+          { id: "Q19_D", origLetter: "D", text: "The system cannot reach a conclusion", isCorrect: false }
+        ],
+        explanation: "Step-by-Step Logic (Forward Chaining): Forward chaining is a data-driven approach that processes rules from left (IF) to right (THEN) based on available facts:\n1. Initial Facts: Cart Total = $120, Loyalty Member = True.\n2. Evaluate Rule 1: The Cart Total ($120) is greater than $100. Rule 1 fires, adding a new fact to working memory: Big Spender = True.\n3. Evaluate Rule 2: The working memory now contains both Big Spender = True and Loyalty Member = True. Both conditions are satisfied, so Rule 2 fires.\n4. Final Conclusion: Apply a 20% discount."
+      },
+      {
+        id: "Q20",
+        num: 20,
+        type: "MCQ",
+        page: 24,
+        topic: "Forward & Backward Chaining",
+        question: "A smart home system uses the following rules:\n• Rule 1: IF time is between 11 PM and 6 AM, THEN activate Night Mode.\n• Rule 2: IF Night Mode is active AND a door is open, THEN trigger an intruder alarm.\nIf the time is 2 AM and the front door is open, what happens?",
+        options: [
+          { id: "Q20_A", origLetter: "A", text: "Neither rule fires", isCorrect: false },
+          { id: "Q20_B", origLetter: "B", text: "Only Rule 1 fires", isCorrect: false },
+          { id: "Q20_C", origLetter: "C", text: "Rule 1 fires, followed by Rule 2", isCorrect: true },
+          { id: "Q20_D", origLetter: "D", text: "Rule 2 fires without requiring Night Mode", isCorrect: false }
+        ],
+        explanation: "Step-by-Step Breakdown:\n1. Initial Facts: Time is 2 AM and Door is open.\n2. Step 1: The system evaluates Rule 1. Since 2 AM falls between 11 PM and 6 AM, Rule 1 fires. This adds a new fact to the system's working memory: Night Mode is active.\n3. Step 2: The system now checks Rule 2. The system has two active facts: Night Mode is active (just added) and Door is open (initial fact). Since both conditions are true, Rule 2 fires.\n4. Final Result: The intruder alarm is triggered sequentially."
+      },
+      {
+        id: "Q21",
+        num: 21,
+        type: "MCQ",
+        page: 26,
+        topic: "Forward & Backward Chaining",
+        question: "In the flu diagnosis example, which condition must be satisfied to infer Influenza-Like Illness (ILI)?",
+        options: [
+          { id: "Q21_A", origLetter: "A", text: "Positive RIDT only", isCorrect: false },
+          { id: "Q21_B", origLetter: "B", text: "High fever above 38°C AND severe cough", isCorrect: true },
+          { id: "Q21_C", origLetter: "C", text: "Symptom onset below 48 hours only", isCorrect: false },
+          { id: "Q21_D", origLetter: "D", text: "High fever OR positive RIDT", isCorrect: false }
+        ],
+        explanation: "Influenza-Like Illness (ILI) is clinically defined as a combination of fever and a cough or sore throat. A positive Rapid Influenza Diagnostic Test (RIDT) is used later to confirm actual Influenza, not to infer the preliminary ILI."
+      },
+      {
+        id: "Q22",
+        num: 22,
+        type: "MCQ",
+        page: 27,
+        topic: "Forward & Backward Chaining",
+        question: "A patient has the following data:\n• Fever = 39°C\n• Cough = Severe\n• RIDT = Positive\n• Symptom Onset = 24 hours ago\nAccording to the lecture's forward-chaining rules, what is the final conclusion?",
+        options: [
+          { id: "Q22_A", origLetter: "A", text: "No diagnosis can be made", isCorrect: false },
+          { id: "Q22_B", origLetter: "B", text: "Only ILI is identified", isCorrect: false },
+          { id: "Q22_C", origLetter: "C", text: "Influenza is diagnosed, but no further action occurs", isCorrect: false },
+          { id: "Q22_D", origLetter: "D", text: "Influenza is diagnosed and an antiviral prescription alert is triggered", isCorrect: true }
+        ],
+        explanation: "Following the sequential forward-chaining rules: 1) The fever and cough satisfy ILI. 2) ILI paired with a positive RIDT satisfies the rule for an Influenza diagnosis. 3) Because the symptom onset is under 48 hours, the final rule fires to trigger an antiviral (e.g., Tamiflu) prescription alert."
+      },
+      {
+        id: "Q23",
+        num: 23,
+        type: "MCQ",
+        page: 29,
+        topic: "Forward & Backward Chaining",
+        question: "Using the same flu diagnosis rules, suppose a patient has a fever of 39°C and a severe cough, but their RIDT is negative. Which conclusion is supported?",
+        options: [
+          { id: "Q23_A", origLetter: "A", text: "Influenza is confirmed", isCorrect: false },
+          { id: "Q23_B", origLetter: "B", text: "ILI can be inferred, but the Influenza diagnosis rule is not satisfied", isCorrect: true },
+          { id: "Q23_C", origLetter: "C", text: "An antiviral alert must be triggered", isCorrect: false },
+          { id: "Q23_D", origLetter: "D", text: "No rule can fire", isCorrect: false }
+        ],
+        explanation: "The patient meets the baseline criteria for an Influenza-Like Illness (fever + cough), but because the RIDT is negative, the system cannot step forward to confirm a definitive Influenza diagnosis or generate an antiviral alert."
+      },
+      {
+        id: "Q24",
+        num: 24,
+        type: "MCQ",
+        page: 30,
+        topic: "Forward & Backward Chaining",
+        question: "In the elevator example, the elevator is on the first floor and the button for the third floor is pressed. Which action follows from the corresponding rule?",
+        options: [
+          { id: "Q24_A", origLetter: "A", text: "Open the door on the first floor", isCorrect: false },
+          { id: "Q24_B", origLetter: "B", text: "Go to the second floor", isCorrect: false },
+          { id: "Q24_C", origLetter: "C", text: "Go to the third floor", isCorrect: true },
+          { id: "Q24_D", origLetter: "D", text: "Remember to go to the first floor later", isCorrect: false }
+        ],
+        explanation: "The rule evaluates the internal condition (current floor = 1) and the incoming request (destination button = 3) to execute the straight-line action of moving toward the target floor."
+      },
+      {
+        id: "Q25",
+        num: 25,
+        type: "MCQ",
+        page: 31,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "If two elevator rules are eligible to execute simultaneously, what mechanism determines which rule fires first?",
+        options: [
+          { id: "Q25_A", origLetter: "A", text: "Knowledge Elicitation", isCorrect: false },
+          { id: "Q25_B", origLetter: "B", text: "Conflict Resolution", isCorrect: true },
+          { id: "Q25_C", origLetter: "C", text: "Backward Reasoning", isCorrect: false },
+          { id: "Q25_D", origLetter: "D", text: "Protocol Analysis", isCorrect: false }
+        ],
+        explanation: "When multiple rules satisfy their \"IF\" conditions simultaneously and enter the Agenda together, the inference engine relies on conflict resolution strategies (like priority weights, rule ordering, or recency) to determine which rule fires first."
+      },
+      {
+        id: "Q26",
+        num: 26,
+        type: "MCQ",
+        page: 32,
+        topic: "Forward & Backward Chaining",
+        question: "Why can Forward Chaining become inefficient when only one specific conclusion needs to be proved?",
+        options: [
+          { id: "Q26_A", origLetter: "A", text: "It cannot process multiple facts", isCorrect: false },
+          { id: "Q26_B", origLetter: "B", text: "It requires all rules to be deleted", isCorrect: false },
+          { id: "Q26_C", origLetter: "C", text: "It may derive conclusions unrelated to the current goal", isCorrect: true },
+          { id: "Q26_D", origLetter: "D", text: "It cannot generate new facts", isCorrect: false }
+        ],
+        explanation: "Because forward chaining is data-driven and looks at all available facts to fire any rule it can, it will exhaustively map out every single consequence. This can waste a lot of processing overhead if your objective is simply to verify one specific outcome."
+      },
+      {
+        id: "Q27",
+        num: 27,
+        type: "MCQ",
+        page: 33,
+        topic: "Forward & Backward Chaining",
+        question: "In the robotic arm example, the main goal of Backward Chaining is to investigate:",
+        options: [
+          { id: "Q27_A", origLetter: "A", text: "Whether the elevator should move", isCorrect: false },
+          { id: "Q27_B", origLetter: "B", text: "Whether a Robotic Arm Emergency Stop occurred through the specified failure conditions", isCorrect: true },
+          { id: "Q27_C", origLetter: "C", text: "Whether the patient has influenza", isCorrect: false },
+          { id: "Q27_D", origLetter: "D", text: "Whether the system should apply a discount", isCorrect: false }
+        ],
+        explanation: "Backward chaining is goal-driven. In a safety diagnosis context, it begins with the high-level critical state (the Emergency Stop goal) and traces backward through the operational and electrical rules to see which exact sequence of failures caused it."
+      },
+      {
+        id: "Q28",
+        num: 28,
+        type: "MCQ",
+        page: 34,
+        topic: "Forward & Backward Chaining",
+        question: "Consider the following rule: IF Critical Voltage Drop AND Joint Motors Overheating, THEN Robotic Arm Emergency Stop. Which statement is correct?",
+        options: [
+          { id: "Q28_A", origLetter: "A", text: "Either condition alone satisfies the rule", isCorrect: false },
+          { id: "Q28_B", origLetter: "B", text: "Both conditions must be satisfied", isCorrect: true },
+          { id: "Q28_C", origLetter: "C", text: "Only the voltage condition is required", isCorrect: false },
+          { id: "Q28_D", origLetter: "D", text: "The rule executes without checking sensor values", isCorrect: false }
+        ],
+        explanation: "The rule uses the logical AND operator. This means both \"Critical Voltage Drop\" and \"Joint Motors Overheating\" must evaluate to true for the \"Robotic Arm Emergency Stop\" conclusion to be drawn."
+      },
+      {
+        id: "Q29",
+        num: 29,
+        type: "MCQ",
+        page: 35,
+        topic: "Forward & Backward Chaining",
+        question: "A robotic arm diagnostic system uses these rules:\n• Rule 1: IF Main Power Supply is below 400V, THEN Critical Voltage Drop.\n• Rule 2: IF Motor Temperature exceeds 90°C AND Cooling Fan RPM = 0, THEN Joint Motors Overheating.\nCurrent readings:\n• Voltage = 415V\n• Motor Temperature = 94°C\n• Cooling Fan RPM = 0\nWhich conclusion is supported?",
+        options: [
+          { id: "Q29_A", origLetter: "A", text: "Critical Voltage Drop only", isCorrect: false },
+          { id: "Q29_B", origLetter: "B", text: "Both Critical Voltage Drop and Overheating", isCorrect: false },
+          { id: "Q29_C", origLetter: "C", text: "Joint Motors Overheating only", isCorrect: true },
+          { id: "Q29_D", origLetter: "D", text: "Neither condition is satisfied", isCorrect: false }
+        ],
+        explanation: "Rule 1 does not fire because the Voltage (415V) is not below 400V. Rule 2 fires because the Motor Temperature (94°C) exceeds 90°C AND the Cooling Fan RPM is 0. This supports the conclusion that the Joint Motors are Overheating."
+      },
+      {
+        id: "Q30",
+        num: 30,
+        type: "MCQ",
+        page: 37,
+        topic: "Forward & Backward Chaining",
+        question: "In Backward Chaining, when a required sub-goal cannot be proved, the inference engine may:",
+        options: [
+          { id: "Q30_A", origLetter: "A", text: "Automatically declare the main goal true", isCorrect: false },
+          { id: "Q30_B", origLetter: "B", text: "Ignore all remaining rules", isCorrect: false },
+          { id: "Q30_C", origLetter: "C", text: "Backtrack and search for alternative supporting paths", isCorrect: true },
+          { id: "Q30_D", origLetter: "D", text: "Convert all hypotheses into initial facts", isCorrect: false }
+        ],
+        explanation: "Backward chaining is a depth-first search strategy. If a sub-goal fails along one specific branch, the engine backtracks to previous nodes to check if any alternative rules can prove the same condition."
+      },
+      {
+        id: "Q31",
+        num: 31,
+        type: "MCQ",
+        page: 38,
+        topic: "Frames & Logic Representation",
+        question: "A frame in knowledge representation is primarily used to:",
+        options: [
+          { id: "Q31_A", origLetter: "A", text: "Represent objects or concepts using attributes and their values", isCorrect: true },
+          { id: "Q31_B", origLetter: "B", text: "Execute every rule in the knowledge base", isCorrect: false },
+          { id: "Q31_C", origLetter: "C", text: "Replace all logical expressions", isCorrect: false },
+          { id: "Q31_D", origLetter: "D", text: "Store only numerical calculations", isCorrect: false }
+        ],
+        explanation: "A frame in knowledge representation is primarily used to represent objects or concepts using attributes (slots) and their values (PDF p. 38: Q31. A. Represent objects or concepts using attributes and their values)."
+      },
+      {
+        id: "Q32",
+        num: 32,
+        type: "MCQ",
+        page: 39,
+        topic: "Frames & Logic Representation",
+        question: "Consider the following frame:\nFrame: Bird\n• Type = Animal\n• Body Covering = Feathers\n• Legs = 2\nWhat does the attribute \"Body Covering\" represent?",
+        options: [
+          { id: "Q32_A", origLetter: "A", text: "Frame Name", isCorrect: false },
+          { id: "Q32_B", origLetter: "B", text: "Slot", isCorrect: true },
+          { id: "Q32_C", origLetter: "C", text: "Slot Value", isCorrect: false },
+          { id: "Q32_D", origLetter: "D", text: "Inference Rule", isCorrect: false }
+        ],
+        explanation: "In a frame structure, an attribute name such as \"Body Covering\" represents a Slot (while \"Feathers\" is its Slot Value, and \"Bird\" is the Frame Name)."
+      },
+      {
+        id: "Q33",
+        num: 33,
+        type: "MCQ",
+        page: 40,
+        topic: "Frames & Logic Representation",
+        question: "A general Bird frame has the default property Can Fly = Usually. A Penguin frame inherits from Bird but specifies Can Fly = No. Which concept allows this exception?",
+        options: [
+          { id: "Q33_A", origLetter: "A", text: "Conflict Resolution", isCorrect: false },
+          { id: "Q33_B", origLetter: "B", text: "Default Value Override", isCorrect: true },
+          { id: "Q33_C", origLetter: "C", text: "Rule Firing", isCorrect: false },
+          { id: "Q33_D", origLetter: "D", text: "Propositional Logic", isCorrect: false }
+        ],
+        explanation: "Default Value Override allows a specialized subframe (Penguin) to inherit general properties from a parent frame (Bird) while overriding specific default slot values (Can Fly = No)."
+      },
+      {
+        id: "Q34",
+        num: 34,
+        type: "MCQ",
+        page: 41,
+        topic: "Frames & Logic Representation",
+        question: "Which of the following is a disadvantage of frames?",
+        options: [
+          { id: "Q34_A", origLetter: "A", text: "They cannot represent object properties", isCorrect: false },
+          { id: "Q34_B", origLetter: "B", text: "They do not support inheritance", isCorrect: false },
+          { id: "Q34_C", origLetter: "C", text: "Complex logical relationships may be difficult to represent", isCorrect: true },
+          { id: "Q34_D", origLetter: "D", text: "They cannot organize related information", isCorrect: false }
+        ],
+        explanation: "Frames are structural and excellent for hierarchical taxonomy, but they struggle to elegantly capture complex logical relationships, constraints, or quantification (like \"for all\" or \"there exists\") compared to logic."
+      },
+      {
+        id: "Q35",
+        num: 35,
+        type: "MCQ",
+        page: 42,
+        topic: "Frames & Logic Representation",
+        question: "Which knowledge representation technique uses statements that are either True or False?",
+        options: [
+          { id: "Q35_A", origLetter: "A", text: "Frames", isCorrect: false },
+          { id: "Q35_B", origLetter: "B", text: "Propositional Logic", isCorrect: true },
+          { id: "Q35_C", origLetter: "C", text: "Protocol Analysis", isCorrect: false },
+          { id: "Q35_D", origLetter: "D", text: "Working Memory", isCorrect: false }
+        ],
+        explanation: "Propositional logic deals with declarative statements (propositions) that can only have a truth value of either True or False."
+      },
+      {
+        id: "Q36",
+        num: 36,
+        type: "MCQ",
+        page: 43,
+        topic: "Frames & Logic Representation",
+        question: "Which of the following is an advantage of using Logical Representation in Expert Systems?",
+        options: [
+          { id: "Q36_A", origLetter: "A", text: "It eliminates the need for an inference engine.", isCorrect: false },
+          { id: "Q36_B", origLetter: "B", text: "It represents facts and relationships precisely and allows the system to infer new information.", isCorrect: true },
+          { id: "Q36_C", origLetter: "C", text: "It stores knowledge only as attributes and values.", isCorrect: false },
+          { id: "Q36_D", origLetter: "D", text: "It prevents the system from drawing conclusions.", isCorrect: false }
+        ],
+        explanation: "Logical representation excels in precision, mathematically rigorous truth statements, and deterministic inference (deriving new true statements from existing ones)."
+      },
+      {
+        id: "Q37",
+        num: 37,
+        type: "MCQ",
+        page: 44,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "In a rule-based expert system, matching rules with facts means:",
+        options: [
+          { id: "Q37_A", origLetter: "A", text: "Comparing rule conditions with facts in working memory", isCorrect: true },
+          { id: "Q37_B", origLetter: "B", text: "Executing every rule regardless of its conditions", isCorrect: false },
+          { id: "Q37_C", origLetter: "C", text: "Removing facts from the knowledge base", isCorrect: false },
+          { id: "Q37_D", origLetter: "D", text: "Asking the user to rewrite all rules", isCorrect: false }
+        ],
+        explanation: "Matching means the inference engine looks at the \"IF\" condition of a rule and cross-references it with the current facts residing in the working memory to see if that rule is eligible to fire."
+      },
+      {
+        id: "Q38",
+        num: 38,
+        type: "MCQ",
+        page: 45,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "Consider the following facts:\n• Fever = True\n• Cough = True\n• Rash = False\nRules:\n• R1: IF Fever AND Cough, THEN Flu.\n• R2: IF Fever AND Rash, THEN Measles.\n• R3: IF Cough, THEN Respiratory Examination.\nWhich rules are eligible to fire?",
+        options: [
+          { id: "Q38_A", origLetter: "A", text: "R1 only", isCorrect: false },
+          { id: "Q38_B", origLetter: "B", text: "R2 and R3", isCorrect: false },
+          { id: "Q38_C", origLetter: "C", text: "R1 and R3", isCorrect: true },
+          { id: "Q38_D", origLetter: "D", text: "All three rules", isCorrect: false }
+        ],
+        explanation: "Let's check the conditions for each rule:\n• R1: Requires Fever (True) AND Cough (True). Both are True, so R1 is eligible.\n• R2: Requires Fever (True) AND Rash (False). Since Rash is False, R2 is not eligible.\n• R3: Requires Cough (True). This is True, so R3 is eligible."
+      },
+      {
+        id: "Q39",
+        num: 39,
+        type: "MCQ",
+        page: 47,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "What is the main difference between Rule Matching and Rule Firing?",
+        options: [
+          { id: "Q39_A", origLetter: "A", text: "Matching executes rules, while firing stores facts", isCorrect: false },
+          { id: "Q39_B", origLetter: "B", text: "Matching identifies eligible rules, while firing executes a selected rule", isCorrect: true },
+          { id: "Q39_C", origLetter: "C", text: "Both always execute simultaneously", isCorrect: false },
+          { id: "Q39_D", origLetter: "D", text: "Rule firing occurs before checking conditions", isCorrect: false }
+        ],
+        explanation: "Rule Matching is the passive phase where the inference engine scans working memory to see which \"IF\" conditions are met. Rule Firing is the active phase where the engine actually executes the chosen rule's \"THEN\" action, updating the system state or concluding a new fact."
+      },
+      {
+        id: "Q40",
+        num: 40,
+        type: "MCQ",
+        page: 48,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "Several rules match the current facts in working memory. The expert system must select one to execute first. Which of the following may be used as a conflict resolution strategy?",
+        options: [
+          { id: "Q40_A", origLetter: "A", text: "Rule Priority", isCorrect: false },
+          { id: "Q40_B", origLetter: "B", text: "Specificity", isCorrect: false },
+          { id: "Q40_C", origLetter: "C", text: "Recency of Facts", isCorrect: false },
+          { id: "Q40_D", origLetter: "D", text: "All of the above", isCorrect: true }
+        ],
+        explanation: "When multiple rules are eligible to fire simultaneously, they form a conflict set. The engine uses Rule Priority (salience scores), Specificity (rules with more specific, detailed conditions), and Recency of Facts (rules matching the most newly added facts) to decide which one executes first."
+      },
+
+      // -------------------- TRUE OR FALSE SECTION (TF1 - TF11) --------------------
+      {
+        id: "TF1",
+        num: 41,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "An expert system is primarily designed to: replace all computer operating systems ( )",
+        options: [
+          { id: "TF1_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF1_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q1 (PDF p. 2 & p. 51), an expert system is primarily designed to solve complex problems in a specific domain at an expert level, not replace computer operating systems."
+      },
+      {
+        id: "TF2",
+        num: 42,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "A. Knowledge Base is one of the three key components of an expert system ( )",
+        options: [
+          { id: "TF2_T", origLetter: "A", text: "True", isCorrect: true },
+          { id: "TF2_F", origLetter: "B", text: "False", isCorrect: false }
+        ],
+        explanation: "True — As shown in Q2 (PDF p. 3 & p. 51), the three key components of an expert system are the Knowledge Base, Inference Engine, and User Interface."
+      },
+      {
+        id: "TF3",
+        num: 43,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "A medical expert system stores diagnostic rules collected from experienced doctors. User Interface component stores these rules ( )",
+        options: [
+          { id: "TF3_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF3_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q3 (PDF p. 4 & p. 51), the Knowledge Base (not the User Interface) is the repository that stores diagnostic rules and domain-specific expertise."
+      },
+      {
+        id: "TF4",
+        num: 44,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "Working Memory component is responsible for applying IF–THEN rules to reach conclusions ( )",
+        options: [
+          { id: "TF4_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF4_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q4 (PDF p. 5 & p. 51), the Inference Engine (not Working Memory) is responsible for applying IF–THEN rules to reach conclusions."
+      },
+      {
+        id: "TF5",
+        num: 45,
+        type: "TF",
+        page: 50,
+        topic: "Knowledge Acquisition",
+        question: "The process of constructing an expert system using specialized domain knowledge is called Data Mining ( )",
+        options: [
+          { id: "TF5_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF5_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q5 (PDF p. 6 & p. 51), the process of constructing an expert system using specialized domain knowledge is called Knowledge Engineering, not Data Mining."
+      },
+      {
+        id: "TF6",
+        num: 46,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "Low reliability is a characteristic of expert systems ( )",
+        options: [
+          { id: "TF6_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF6_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q7 (PDF p. 10 & p. 51), expert systems are characterized by high responsiveness and reliability, providing quick, reliable, and consistent expert-level advice without fatigue."
+      },
+      {
+        id: "TF7",
+        num: 47,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "Hybrid expert systems may combine classical expert-system techniques with Artificial Neural Networks and Genetic Algorithms ( )",
+        options: [
+          { id: "TF7_T", origLetter: "A", text: "True", isCorrect: true },
+          { id: "TF7_F", origLetter: "B", text: "False", isCorrect: false }
+        ],
+        explanation: "True — As shown in Q8 (PDF p. 11 & p. 51), hybrid expert systems integrate classic rule-based reasoning with soft computing techniques like Artificial Neural Networks and Genetic Algorithms."
+      },
+      {
+        id: "TF8",
+        num: 48,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "Knowledge Base stores domain knowledge, while Inference Engine performs reasoning ( )",
+        options: [
+          { id: "TF8_T", origLetter: "A", text: "True", isCorrect: true },
+          { id: "TF8_F", origLetter: "B", text: "False", isCorrect: false }
+        ],
+        explanation: "True — As shown in Q10 (PDF p. 13 & p. 51), the core kernel of an expert system relies on this clear separation: the Knowledge Base contains the rules/facts, and the Inference Engine applies logical reasoning to them."
+      },
+      {
+        id: "TF9",
+        num: 49,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "Facility component stores the current facts used by the rules during problem-solving ( )",
+        options: [
+          { id: "TF9_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF9_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q11 (PDF p. 14 & p. 51), Working Memory holds the current known facts and session-specific state data that the rules evaluate during problem-solving."
+      },
+      {
+        id: "TF10",
+        num: 50,
+        type: "TF",
+        page: 50,
+        topic: "Architecture & Components",
+        question: "A user asks an expert system why it recommended a particular diagnosis. Agenda component should provide the reasoning ( )",
+        options: [
+          { id: "TF10_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF10_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q12 (PDF p. 15 & p. 51), the Explanation Facility (not the Agenda) is built to show the user the chain of logic or rules used to arrive at a conclusion."
+      },
+      {
+        id: "TF11",
+        num: 51,
+        type: "TF",
+        page: 50,
+        topic: "Rule Matching & Conflict Resolution",
+        question: "Store historical user conversations is the main purpose of the Agenda in an expert system ( )",
+        options: [
+          { id: "TF11_T", origLetter: "A", text: "True", isCorrect: false },
+          { id: "TF11_F", origLetter: "B", text: "False", isCorrect: true }
+        ],
+        explanation: "False — As shown in Q13 (PDF p. 16 & p. 51), the main purpose of the Agenda is to maintain a prioritized list of rules whose conditions are satisfied (ready to fire) for conflict resolution."
+      }
+    ];
+
+    // =========================================================================
+    // 2. APPLICATION STATE & SAFE LOCALSTORAGE HELPERS
+    // =========================================================================
+    const state = {
+      currentView: "bank", // 'bank' | 'quiz'
+      // Questions Bank State
+      bankFilter: "ALL",   // 'ALL' | 'MCQ' | 'TF' | 'BOOKMARKED'
+      bankTopic: "ALL",
+      bankSearch: "",
+      revealedAnswers: new Set(),     // stores question IDs whose answers are revealed in Bank
+      bankTriedOptions: {},           // { [questionId]: selectedOptionId } for interactive practice in Bank
+      bookmarkedIds: new Set(),       // saved in localStorage
+      // Quiz State
+      quizConfig: {
+        type: "ALL",                  // 'ALL' | 'MCQ' | 'TF'
+        count: 10
+      },
+      quizStage: "setup",             // 'setup' | 'active' | 'results'
+      quizQuestions: [],              // array of randomized question objects with shuffled options
+      quizUserAnswers: {},            // { [questionId]: selectedOptionId }
+      quizStartTime: 0,
+      quizElapsedSeconds: 0,
+      quizTimerInterval: null,
+      resultFilter: "ALL"             // 'ALL' | 'WRONG' | 'CORRECT'
+    };
+
+    function loadPersistedState() {
+      try {
+        const savedBookmarks = localStorage.getItem("ms_expert_systems_bookmarks");
+        if (savedBookmarks) {
+          const parsed = JSON.parse(savedBookmarks);
+          if (Array.isArray(parsed)) {
+            state.bookmarkedIds = new Set(parsed);
+          }
+        }
+        const savedLastAttempt = localStorage.getItem("ms_expert_systems_last_score");
+        if (savedLastAttempt) {
+          const info = JSON.parse(savedLastAttempt);
+          const el = document.getElementById("lastAttemptSummaryText");
+          if (el && info && typeof info.pct === "number") {
+            el.textContent = `Last Quiz Attempt: ${info.correct}/${info.total} (${info.pct}%) • Ready for a new randomized attempt.`;
+          }
+        }
+      } catch (e) {
+        // Ignore storage errors in restricted environments
+      }
+    }
+
+    function saveBookmarks() {
+      try {
+        localStorage.setItem("ms_expert_systems_bookmarks", JSON.stringify(Array.from(state.bookmarkedIds)));
+      } catch (e) {
+        // Ignore
+      }
+      updateBookmarkCounters();
+    }
+
+    function saveLastScore(correct, total, pct) {
+      try {
+        localStorage.setItem("ms_expert_systems_last_score", JSON.stringify({ correct, total, pct }));
+      } catch (e) {
+        // Ignore
+      }
+    }
+
+    function updateBookmarkCounters() {
+      const count = state.bookmarkedIds.size;
+      const statEl = document.getElementById("statBookmarkedCount");
+      const tabEl = document.getElementById("tabBookmarkCount");
+      if (statEl) statEl.textContent = String(count);
+      if (tabEl) tabEl.textContent = String(count);
+    }
+
+    // =========================================================================
+    // 3. UTILITY FUNCTIONS (HTML ESCAPE & FISHER-YATES SHUFFLE)
+    // =========================================================================
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
+      }
+      return copy;
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    // =========================================================================
+    // 4. NAVIGATION BETWEEN VIEWS (QUESTIONS BANK vs QUIZ)
+    // =========================================================================
+    function switchView(targetView) {
+      state.currentView = targetView;
+      const bankView = document.getElementById("bankView");
+      const quizView = document.getElementById("quizView");
+      const navBankBtn = document.getElementById("navBankBtn");
+      const navQuizBtn = document.getElementById("navQuizBtn");
+
+      if (targetView === "bank") {
+        bankView.classList.remove("hidden");
+        quizView.classList.add("hidden");
+        navBankBtn.className = "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm";
+        navQuizBtn.className = "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-indigo-700";
+        renderQuestionsBank();
+      } else {
+        bankView.classList.add("hidden");
+        quizView.classList.remove("hidden");
+        navQuizBtn.className = "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm";
+        navBankBtn.className = "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all text-slate-600 hover:text-indigo-700";
+        renderQuizView();
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // =========================================================================
+    // 5. QUESTIONS BANK RENDERING & INTERACTIVITY
+    // =========================================================================
+    function getFilteredBankQuestions() {
+      const query = state.bankSearch.trim().toLowerCase();
+      return QUESTIONS_DATA.filter((q) => {
+        if (state.bankFilter === "MCQ" && q.type !== "MCQ") return false;
+        if (state.bankFilter === "TF" && q.type !== "TF") return false;
+        if (state.bankFilter === "BOOKMARKED" && !state.bookmarkedIds.has(q.id)) return false;
+        if (state.bankTopic !== "ALL" && q.topic !== state.bankTopic) return false;
+
+        if (query) {
+          const inId = q.id.toLowerCase().includes(query);
+          const inQuestion = q.question.toLowerCase().includes(query);
+          const inTopic = q.topic.toLowerCase().includes(query);
+          const inExplanation = q.explanation.toLowerCase().includes(query);
+          const inOptions = q.options.some((opt) => opt.text.toLowerCase().includes(query));
+          return inId || inQuestion || inTopic || inExplanation || inOptions;
+        }
+        return true;
+      });
+    }
+
+    function renderQuestionsBank() {
+      updateBookmarkCounters();
+
+      // Update Filter Tab Styles
+      document.querySelectorAll(".bank-filter-btn").forEach((btn) => {
+        const filterVal = btn.getAttribute("data-bank-filter");
+        if (filterVal === state.bankFilter) {
+          btn.className = "bank-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-indigo-600 text-white shadow-sm";
+        } else {
+          btn.className = "bank-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700";
+        }
+      });
+
+      const filtered = getFilteredBankQuestions();
+      const summaryEl = document.getElementById("bankResultsSummary");
+      if (summaryEl) {
+        summaryEl.textContent = `Showing ${filtered.length} of ${QUESTIONS_DATA.length} questions`;
+      }
+
+      const container = document.getElementById("bankQuestionsContainer");
+      if (!container) return;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-3xl p-10 text-center border border-slate-200/80 space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center mx-auto font-bold text-xl">?</div>
+            <h3 class="text-base font-extrabold text-slate-800">No Matching Questions Found</h3>
+            <p class="text-xs text-slate-500 font-arabic">لا توجد أسئلة مطابقة لفلتر البحث الحالي. جرب تغيير القسم أو مسح كلمة البحث.</p>
+            <button type="button" data-action="reset-bank-filters" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-all">
+              Reset Filters (إعادة ضبط الفلاتر)
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const htmlParts = [];
+      let currentSectionHeader = "";
+
+      filtered.forEach((q) => {
+        // Group divider when viewing ALL
+        if (state.bankFilter === "ALL" && !state.bankSearch && state.bankTopic === "ALL") {
+          const sectionTitle = q.type === "MCQ"
+            ? "Section 1: Multiple Choice Questions (أسئلة الاختيار من متعدد Q1 – Q40)"
+            : "Section 2: True / False Questions (أسئلة الصح والخطأ TF1 – TF11)";
+          if (sectionTitle !== currentSectionHeader) {
+            currentSectionHeader = sectionTitle;
+            htmlParts.push(`
+              <div class="pt-3 pb-1 flex items-center gap-3">
+                <span class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold ${q.type === "MCQ" ? "bg-blue-600 text-white" : "bg-purple-600 text-white"} shadow-xs">
+                  ${escapeHtml(sectionTitle)}
+                </span>
+                <div class="h-px bg-slate-200 flex-1"></div>
+              </div>
+            `);
+          }
+        }
+
+        const isRevealed = state.revealedAnswers.has(q.id);
+        const triedOptId = state.bankTriedOptions[q.id] || null;
+        const isBookmarked = state.bookmarkedIds.has(q.id);
+        const correctOpt = q.options.find((o) => o.isCorrect);
+
+        const optionsHtml = q.options.map((opt) => {
+          const isSelectedByStudent = triedOptId === opt.id;
+          let optionClasses = "border-slate-200 bg-slate-50/70 hover:bg-white hover:border-indigo-300 text-slate-800";
+          let badgeClasses = "bg-white text-slate-700 border border-slate-200";
+          let statusTag = "";
+
+          if (isRevealed) {
+            if (opt.isCorrect) {
+              optionClasses = "border-emerald-500 bg-emerald-50/80 text-emerald-950 font-semibold shadow-2xs";
+              badgeClasses = "bg-emerald-600 text-white border-emerald-600";
+              statusTag = `<span class="ml-auto px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 shrink-0">✓ Correct Answer</span>`;
+            } else if (isSelectedByStudent && !opt.isCorrect) {
+              optionClasses = "border-rose-400 bg-rose-50/70 text-rose-900";
+              badgeClasses = "bg-rose-600 text-white border-rose-600";
+              statusTag = `<span class="ml-auto px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 shrink-0">✕ Your Selection</span>`;
+            } else {
+              optionClasses = "border-slate-200/70 bg-slate-50/40 text-slate-500";
+            }
+          } else if (isSelectedByStudent) {
+            if (opt.isCorrect) {
+              optionClasses = "border-emerald-500 bg-emerald-50/80 text-emerald-950 font-semibold";
+              badgeClasses = "bg-emerald-600 text-white border-emerald-600";
+              statusTag = `<span class="ml-auto px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 shrink-0">✓ Correct!</span>`;
+            } else {
+              optionClasses = "border-rose-400 bg-rose-50/80 text-rose-900 font-medium";
+              badgeClasses = "bg-rose-600 text-white border-rose-600";
+              statusTag = `<span class="ml-auto px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 shrink-0">✕ Try Again</span>`;
+            }
+          }
+
+          return `
+            <button
+              type="button"
+              data-action="bank-try-option"
+              data-qid="${q.id}"
+              data-optid="${opt.id}"
+              class="option-btn w-full text-left p-3.5 rounded-2xl border ${optionClasses} flex items-center gap-3 text-sm"
+            >
+              <span class="w-7 h-7 rounded-xl font-mono font-bold text-xs flex items-center justify-center shrink-0 ${badgeClasses}">
+                ${q.type === "MCQ" ? escapeHtml(opt.origLetter) : (opt.text === "True" ? "T" : "F")}
+              </span>
+              <span class="flex-1 leading-snug">${escapeHtml(opt.text)}</span>
+              ${statusTag}
+            </button>
+          `;
+        }).join("");
+
+        htmlParts.push(`
+          <article class="study-card bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/85 shadow-xs space-y-4">
+            <!-- Card Header -->
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-3 py-1 rounded-xl font-mono font-extrabold text-xs ${q.type === "MCQ" ? "bg-blue-600 text-white" : "bg-purple-600 text-white"}">
+                  ${escapeHtml(q.id)}
+                </span>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${q.type === "MCQ" ? "bg-blue-50 text-blue-700 border border-blue-200/60" : "bg-purple-50 text-purple-700 border border-purple-200/60"}">
+                  ${q.type === "MCQ" ? "Multiple Choice (MCQ)" : "True / False"}
+                </span>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">
+                  ${escapeHtml(q.topic)}
+                </span>
+                <span class="text-xs font-mono text-slate-400">PDF p.${q.page}</span>
+              </div>
+
+              <!-- Bookmark Star Button -->
+              <button
+                type="button"
+                data-action="toggle-bookmark"
+                data-qid="${q.id}"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
+                  isBookmarked
+                    ? "bg-amber-50 text-amber-700 border-amber-300"
+                    : "bg-slate-50 text-slate-500 border-slate-200 hover:text-amber-600 hover:border-amber-200"
+                }"
+                title="Bookmark question for review"
+              >
+                <span>${isBookmarked ? "★ Saved" : "☆ Save"}</span>
+              </button>
+            </div>
+
+            <!-- Question Stem -->
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed whitespace-pre-line">${escapeHtml(q.question)}</h3>
+
+            <!-- Choices Grid -->
+            <div class="grid grid-cols-1 ${q.type === "TF" ? "sm:grid-cols-2" : " gap-2.5"} gap-2.5">
+              ${optionsHtml}
+            </div>
+
+            <!-- Card Footer Actions: Show/Hide Answer & Explanation -->
+            <div class="pt-2 flex items-center justify-between gap-3 flex-wrap border-t border-slate-100">
+              <button
+                type="button"
+                data-action="toggle-answer"
+                data-qid="${q.id}"
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                  isRevealed
+                    ? "bg-indigo-600 text-white shadow-xs"
+                    : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200/70"
+                }"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>${isRevealed ? "Hide Answer (إخفاء الإجابة والشرح)" : "Show Answer (إظهار الإجابة والشرح)"}</span>
+              </button>
+
+              ${
+                triedOptId
+                  ? `<button type="button" data-action="clear-tried" data-qid="${q.id}" class="text-xs font-semibold text-slate-400 hover:text-slate-600">Reset selection ↺</button>`
+                  : `<span class="text-xs text-slate-400 font-arabic">اختر إجابة لاختبار نفسك أو اضغط Show Answer</span>`
+              }
+            </div>
+
+            <!-- Explanation Box (Shown when Show Answer is active) -->
+            ${
+              isRevealed
+                ? `
+                <div class="explanation-enter rounded-2xl bg-gradient-to-r from-emerald-50/90 via-teal-50/70 to-blue-50/80 border border-emerald-200/80 p-4 space-y-1.5">
+                  <div class="flex items-center gap-2 text-xs sm:text-sm font-extrabold text-emerald-900">
+                    <span class="px-2 py-0.5 rounded-md bg-emerald-600 text-white font-mono text-xs">
+                      Correct Answer: ${q.type === "MCQ" ? `${escapeHtml(correctOpt.origLetter)}. ` : ""}${escapeHtml(correctOpt.text)}
+                    </span>
+                  </div>
+                  <div class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line pt-1">
+                    <strong class="text-slate-900">Explanation:</strong> ${escapeHtml(q.explanation)}
+                  </div>
+                </div>
+              `
+                : ""
+            }
+          </article>
+        `);
+      });
+
+      container.innerHTML = htmlParts.join("");
+    }
+
+    // =========================================================================
+    // 6. QUIZ ENGINE (SETUP, RANDOMIZATION, ACTIVE ATTEMPT, RESULTS)
+    // =========================================================================
+    function getQuizPoolByType(type) {
+      if (type === "MCQ") return QUESTIONS_DATA.filter((q) => q.type === "MCQ");
+      if (type === "TF") return QUESTIONS_DATA.filter((q) => q.type === "TF");
+      return [...QUESTIONS_DATA];
+    }
+
+    function updateQuizSetupUI() {
+      const pool = getQuizPoolByType(state.quizConfig.type);
+      const maxCount = pool.length;
+
+      if (state.quizConfig.count > maxCount) {
+        state.quizConfig.count = maxCount;
+      }
+      if (state.quizConfig.count < 1) {
+        state.quizConfig.count = 1;
+      }
+
+      // Highlight selected type card
+      document.querySelectorAll(".quiz-type-btn").forEach((btn) => {
+        const t = btn.getAttribute("data-quiz-type");
+        if (t === state.quizConfig.type) {
+          btn.className = "quiz-type-btn p-4 rounded-2xl border-2 border-indigo-600 bg-indigo-50/60 text-left transition-all shadow-2xs";
+        } else {
+          btn.className = "quiz-type-btn p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-300 text-left transition-all";
+        }
+      });
+
+      const badge = document.getElementById("availablePoolBadge");
+      if (badge) badge.textContent = `Max Available: ${maxCount} Questions`;
+
+      const slider = document.getElementById("quizCountSlider");
+      const numInput = document.getElementById("quizCountInput");
+      if (slider) {
+        slider.max = String(maxCount);
+        slider.value = String(state.quizConfig.count);
+      }
+      if (numInput) {
+        numInput.max = String(maxCount);
+        numInput.value = String(state.quizConfig.count);
+      }
+
+      // Update preset button active states & disable presets exceeding maxCount
+      document.querySelectorAll(".count-preset-btn").forEach((btn) => {
+        const raw = btn.getAttribute("data-count-preset");
+        const val = raw === "ALL" ? maxCount : parseInt(raw, 10);
+        const isDisabled = raw !== "ALL" && val > maxCount;
+        btn.disabled = isDisabled;
+
+        if (isDisabled) {
+          btn.className = "count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-300 cursor-not-allowed";
+        } else if (val === state.quizConfig.count) {
+          btn.className = "count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all";
+        } else {
+          btn.className = "count-preset-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all";
+        }
+      });
+    }
+
+    function buildRandomizedQuizSession() {
+      const pool = getQuizPoolByType(state.quizConfig.type);
+      const shuffledPool = shuffleArray(pool);
+      const selectedCount = Math.min(state.quizConfig.count, shuffledPool.length);
+      const chosenQuestions = shuffledPool.slice(0, selectedCount);
+
+      const dynamicLetters = ["A", "B", "C", "D"];
+
+      // Shuffle options for each question and assign dynamic display labels A, B, C, D
+      // while keeping each option's unique `id` and `isCorrect` intact!
+      state.quizQuestions = chosenQuestions.map((q, idx) => {
+        const shuffledOpts = shuffleArray(q.options).map((opt, optIdx) => {
+          // If Q40 ("All of the above") is shuffled to another position, clarify its text so the student knows it refers to all three strategies
+          let displayText = opt.text;
+          if (q.id === "Q40" && opt.id === "Q40_D") {
+            displayText = "All of the above (Rule Priority, Specificity, and Recency of Facts)";
+          }
+          return {
+            id: opt.id,
+            origLetter: opt.origLetter,
+            displayLetter: dynamicLetters[optIdx] || String(optIdx + 1),
+            text: displayText,
+            isCorrect: opt.isCorrect
+          };
+        });
+
+        return {
+          id: q.id,
+          type: q.type,
+          page: q.page,
+          topic: q.topic,
+          question: q.question,
+          explanation: q.explanation,
+          shuffledOptions: shuffledOpts
+        };
+      });
+
+      state.quizUserAnswers = {};
+      state.quizElapsedSeconds = 0;
+      state.quizStage = "active";
+      state.resultFilter = "ALL";
+
+      startQuizTimer();
+      renderQuizView();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startQuizTimer() {
+      stopQuizTimer();
+      state.quizStartTime = Date.now();
+      const timerEl = document.getElementById("quizTimerDisplay");
+      if (timerEl) timerEl.textContent = "00:00";
+
+      state.quizTimerInterval = setInterval(() => {
+        state.quizElapsedSeconds = Math.floor((Date.now() - state.quizStartTime) / 1000);
+        const el = document.getElementById("quizTimerDisplay");
+        if (el) el.textContent = formatTime(state.quizElapsedSeconds);
+      }, 1000);
+    }
+
+    function stopQuizTimer() {
+      if (state.quizTimerInterval) {
+        clearInterval(state.quizTimerInterval);
+        state.quizTimerInterval = null;
+      }
+    }
+
+    function renderQuizView() {
+      const setupPanel = document.getElementById("quizSetupPanel");
+      const activePanel = document.getElementById("quizActivePanel");
+      const resultsPanel = document.getElementById("quizResultsPanel");
+
+      setupPanel.classList.add("hidden");
+      activePanel.classList.add("hidden");
+      resultsPanel.classList.add("hidden");
+
+      if (state.quizStage === "setup") {
+        stopQuizTimer();
+        setupPanel.classList.remove("hidden");
+        updateQuizSetupUI();
+      } else if (state.quizStage === "active") {
+        activePanel.classList.remove("hidden");
+        renderActiveQuizQuestion();
+      } else if (state.quizStage === "results") {
+        stopQuizTimer();
+        resultsPanel.classList.remove("hidden");
+        renderQuizResults();
+      }
+    }
+
+    function renderActiveQuizQuestion() {
+      const total = state.quizQuestions.length;
+      if (total === 0) return;
+
+      const currentQ = state.quizQuestions[state.quizCurrentIndex];
+      const answeredCount = Object.keys(state.quizUserAnswers).length;
+      const selectedOptId = state.quizUserAnswers[currentQ.id] || null;
+
+      // Update status badges & progress bar
+      document.getElementById("quizProgressBadge").textContent = `Question ${state.quizCurrentIndex + 1} / ${total}`;
+      document.getElementById("quizAnsweredCountBadge").textContent = `Answered: ${answeredCount} / ${total}`;
+      const progressPct = Math.round(((state.quizCurrentIndex + 1) / total) * 100);
+      document.getElementById("quizProgressBar").style.width = `${progressPct}%`;
+
+      // Render numbered question pills
+      const pillsContainer = document.getElementById("quizQuestionPills");
+      pillsContainer.innerHTML = state.quizQuestions.map((qItem, idx) => {
+        const isCurrent = idx === state.quizCurrentIndex;
+        const isAnswered = Boolean(state.quizUserAnswers[qItem.id]);
+        let pillStyle = "bg-slate-100 text-slate-600 hover:bg-slate-200";
+        if (isCurrent) {
+          pillStyle = "bg-indigo-600 text-white shadow-xs ring-2 ring-indigo-300";
+        } else if (isAnswered) {
+          pillStyle = "bg-blue-100 text-blue-800 border border-blue-300";
+        }
+        return `
+          <button
+            type="button"
+            data-action="jump-quiz-question"
+            data-qindex="${idx}"
+            class="w-8 h-8 rounded-xl font-mono text-xs font-bold shrink-0 transition-all ${pillStyle}"
+            title="Go to Question ${idx + 1}"
+          >
+            ${idx + 1}
+          </button>
+        `;
+      }).join("");
+
+      // Question metadata
+      const typeBadge = document.getElementById("activeQTypeBadge");
+      typeBadge.textContent = currentQ.type === "MCQ" ? "Multiple Choice (MCQ)" : "True / False";
+      typeBadge.className = currentQ.type === "MCQ"
+        ? "px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200"
+        : "px-3 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200";
+
+      document.getElementById("activeQSourceId").textContent = `Ref: ${currentQ.id} • ${currentQ.topic}`;
+      document.getElementById("activeQuestionText").textContent = currentQ.question;
+
+      // Render Shuffled Options (A, B, C, D) WITHOUT revealing correctness
+      const optionsContainer = document.getElementById("activeOptionsContainer");
+      optionsContainer.innerHTML = currentQ.shuffledOptions.map((opt) => {
+        const isChosen = selectedOptId === opt.id;
+        return `
+          <button
+            type="button"
+            data-action="select-quiz-option"
+            data-qid="${currentQ.id}"
+            data-optid="${opt.id}"
+            class="option-btn w-full text-left p-4 rounded-2xl border-2 transition-all flex items-center gap-3.5 ${
+              isChosen
+                ? "border-indigo-600 bg-indigo-50/75 text-indigo-950 font-semibold shadow-xs"
+                : "border-slate-200 bg-slate-50/60 hover:bg-white hover:border-blue-300 text-slate-800"
+            }"
+          >
+            <span class="w-8 h-8 rounded-xl font-mono font-extrabold text-xs sm:text-sm flex items-center justify-center shrink-0 ${
+              isChosen
+                ? "bg-indigo-600 text-white"
+                : "bg-white text-slate-700 border border-slate-200"
+            }">
+              ${escapeHtml(opt.displayLetter)}
+            </span>
+            <span class="flex-1 text-sm sm:text-base leading-snug">${escapeHtml(opt.text)}</span>
+            ${
+              isChosen
+                ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 shrink-0">Selected</span>`
+                : ""
+            }
+          </button>
+        `;
+      }).join("");
+
+      // Update Prev / Next buttons
+      const prevBtn = document.getElementById("prevQuestionBtn");
+      const nextBtn = document.getElementById("nextQuestionBtn");
+      prevBtn.disabled = state.quizCurrentIndex === 0;
+      if (state.quizCurrentIndex === total - 1) {
+        nextBtn.classList.add("hidden");
+      } else {
+        nextBtn.classList.remove("hidden");
+      }
+    }
+
+    function attemptSubmitQuiz() {
+      const total = state.quizQuestions.length;
+      const answeredCount = Object.keys(state.quizUserAnswers).length;
+      const unanswered = total - answeredCount;
+
+      if (unanswered > 0) {
+        const modal = document.getElementById("submitConfirmModal");
+        const msg = document.getElementById("modalUnansweredMessage");
+        msg.textContent = `You still have ${unanswered} unanswered question(s) out of ${total}. Do you want to submit your quiz now or return to answer them? (تبقى لديك ${unanswered} سؤال بدون إجابة من أصل ${total}، هل تريد تسليم الاختبار الآن؟)`;
+        modal.classList.remove("hidden");
+      } else {
+        finalizeQuizSubmission();
+      }
+    }
+
+    function finalizeQuizSubmission() {
+      document.getElementById("submitConfirmModal").classList.add("hidden");
+      stopQuizTimer();
+      state.quizStage = "results";
+      renderQuizView();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuizResults() {
+      const total = state.quizQuestions.length;
+      let correctCount = 0;
+      let wrongCount = 0;
+      let unansweredCount = 0;
+
+      state.quizQuestions.forEach((q) => {
+        const chosenOptId = state.quizUserAnswers[q.id];
+        if (!chosenOptId) {
+          unansweredCount++;
+        } else {
+          const chosenOpt = q.shuffledOptions.find((o) => o.id === chosenOptId);
+          if (chosenOpt && chosenOpt.isCorrect) {
+            correctCount++;
+          } else {
+            wrongCount++;
+          }
+        }
+      });
+
+      const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+      saveLastScore(correctCount, total, pct);
+
+      document.getElementById("resultPercentageText").textContent = `${pct}%`;
+      document.getElementById("resultCorrectCount").textContent = String(correctCount);
+      document.getElementById("resultWrongCount").textContent = String(wrongCount);
+      document.getElementById("resultUnansweredCount").textContent = String(unansweredCount);
+      document.getElementById("resultTimeSpent").textContent = formatTime(state.quizElapsedSeconds);
+
+      const gradeBadge = document.getElementById("resultGradeBadge");
+      const summaryMsg = document.getElementById("resultSummaryMessage");
+
+      if (pct >= 85) {
+        gradeBadge.textContent = "Excellent Mastery • أداء ممتاز";
+        gradeBadge.className = "inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200";
+        summaryMsg.textContent = `أحسنت! أجبت بشكل صحيح على ${correctCount} من أصل ${total} سؤال (${pct}%). راجع الشرح التفصيلي بالأسفل لتثبيت المعلومات أو أعد الاختبار بترتيب عشوائي جديد.`;
+      } else if (pct >= 65) {
+        gradeBadge.textContent = "Good Progress • مستوى جيد";
+        gradeBadge.className = "inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-blue-700 border border-blue-200";
+        summaryMsg.textContent = `حصلت على ${correctCount} من أصل ${total} (${pct}%). راجع الأسئلة الخاطئة وشروحاتها بالأسفل ثم جرب إعادة الاختبار بترتيب مختلف.`;
+      } else {
+        gradeBadge.textContent = "Needs Review • يحتاج لمراجعة";
+        gradeBadge.className = "inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-extrabold bg-amber-50 text-amber-700 border border-amber-200";
+        summaryMsg.textContent = `حصلت على ${correctCount} من أصل ${total} (${pct}%). اقرأ الشرح الخاص بكل إجابة بالأسفل بعناية ثم أعد المحاولة بترتيب عشوائي جديد.`;
+      }
+
+      // Update result filter buttons
+      document.querySelectorAll(".result-filter-btn").forEach((btn) => {
+        const f = btn.getAttribute("data-result-filter");
+        if (f === state.resultFilter) {
+          btn.className = "result-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all";
+        } else {
+          btn.className = "result-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all";
+        }
+      });
+
+      const filteredReview = state.quizQuestions.filter((q) => {
+        const chosenOptId = state.quizUserAnswers[q.id];
+        const chosenOpt = q.shuffledOptions.find((o) => o.id === chosenOptId);
+        const isCorrect = Boolean(chosenOpt && chosenOpt.isCorrect);
+        if (state.resultFilter === "CORRECT") return isCorrect;
+        if (state.resultFilter === "WRONG") return !isCorrect;
+        return true;
+      });
+
+      const reviewContainer = document.getElementById("quizReviewContainer");
+      if (filteredReview.length === 0) {
+        reviewContainer.innerHTML = `
+          <div class="bg-white rounded-3xl p-8 text-center border border-slate-200/80 text-sm text-slate-600 font-arabic">
+            لا توجد أسئلة ضمن هذا التصنيف في محاولتك الحالية.
+          </div>
+        `;
+        return;
+      }
+
+      reviewContainer.innerHTML = filteredReview.map((q) => {
+        const chosenOptId = state.quizUserAnswers[q.id] || null;
+        const chosenOpt = q.shuffledOptions.find((o) => o.id === chosenOptId) || null;
+        const correctOpt = q.shuffledOptions.find((o) => o.isCorrect);
+        const isUserCorrect = Boolean(chosenOpt && chosenOpt.isCorrect);
+
+        let statusBanner = "";
+        if (isUserCorrect) {
+          statusBanner = `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">✓ Correct Answer (إجابة صحيحة)</span>`;
+        } else if (!chosenOpt) {
+          statusBanner = `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-200">○ Unanswered (لم تتم الإجابة)</span>`;
+        } else {
+          statusBanner = `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800 border border-rose-200">✕ Incorrect Answer (إجابة خاطئة)</span>`;
+        }
+
+        const optionsReviewHtml = q.shuffledOptions.map((opt) => {
+          const isThisChosen = chosenOptId === opt.id;
+          let rowStyle = "border-slate-200 bg-slate-50/50 text-slate-600";
+          let letterStyle = "bg-white text-slate-600 border border-slate-200";
+          let tagHtml = "";
+
+          if (opt.isCorrect) {
+            rowStyle = "border-emerald-500 bg-emerald-50/90 text-emerald-950 font-semibold";
+            letterStyle = "bg-emerald-600 text-white";
+            tagHtml = `<span class="ml-auto px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 shrink-0">✓ Correct Answer</span>`;
+          } else if (isThisChosen && !opt.isCorrect) {
+            rowStyle = "border-rose-400 bg-rose-50/90 text-rose-950 font-medium";
+            letterStyle = "bg-rose-600 text-white";
+            tagHtml = `<span class="ml-auto px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800 shrink-0">✕ Your Choice</span>`;
+          }
+
+          return `
+            <div class="p-3.5 rounded-2xl border ${rowStyle} flex items-center gap-3 text-sm">
+              <span class="w-7 h-7 rounded-xl font-mono font-bold text-xs flex items-center justify-center shrink-0 ${letterStyle}">
+                ${escapeHtml(opt.displayLetter)}
+              </span>
+              <span class="flex-1 leading-snug">${escapeHtml(opt.text)}</span>
+              ${tagHtml}
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <article class="bg-white rounded-3xl p-5 sm:p-6 border ${
+            isUserCorrect ? "border-emerald-200/90" : "border-rose-200/90"
+          } shadow-xs space-y-4">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-3 py-1 rounded-xl font-mono font-extrabold text-xs bg-slate-900 text-white">
+                  Quiz #${q.quizIndex + 1}
+                </span>
+                <span class="px-2.5 py-1 rounded-lg font-mono text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                  Source: ${escapeHtml(q.id)} (PDF p.${q.page})
+                </span>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">
+                  ${escapeHtml(q.topic)}
+                </span>
+              </div>
+              ${statusBanner}
+            </div>
+
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed whitespace-pre-line">${escapeHtml(q.question)}</h3>
+
+            <div class="grid grid-cols-1 ${q.type === "TF" ? "sm:grid-cols-2" : ""} gap-2.5">
+              ${optionsReviewHtml}
+            </div>
+
+            <div class="rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-purple-50/80 border border-indigo-200/70 p-4 space-y-1.5">
+              <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
+                <span class="text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-md">
+                  Correct Choice in Attempt: ${escapeHtml(correctOpt.displayLetter)}. ${escapeHtml(correctOpt.text)}
+                </span>
+                ${
+                  chosenOpt
+                    ? `<span class="${isUserCorrect ? "text-emerald-700" : "text-rose-700"}">• Your Answer: ${escapeHtml(chosenOpt.displayLetter)}. ${escapeHtml(chosenOpt.text)}</span>`
+                    : `<span class="text-amber-700">• You did not select an answer for this question.</span>`
+                }
+              </div>
+              <div class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line pt-1">
+                <strong class="text-slate-900">Explanation:</strong> ${escapeHtml(q.explanation)}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    // =========================================================================
+    // 7. EVENT LISTENERS & INITIALIZATION
+    // =========================================================================
+    function initExpertSystemsApp() {
+      if (window.__msAppInitialized) return;
+      window.__msAppInitialized = true;
+      loadPersistedState();
+      renderQuestionsBank();
+      updateQuizSetupUI();
+
+      // Top Navigation
+      document.getElementById("navBankBtn").addEventListener("click", () => switchView("bank"));
+      document.getElementById("navQuizBtn").addEventListener("click", () => switchView("quiz"));
+      document.getElementById("brandHomeBtn").addEventListener("click", () => switchView("bank"));
+
+      // Bank Category Filter Tabs
+      document.getElementById("bankCategoryTabs").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-bank-filter]");
+        if (!btn) return;
+        state.bankFilter = btn.getAttribute("data-bank-filter");
+        renderQuestionsBank();
+      });
+
+      // Bank Global Show / Hide All Answers
+      document.getElementById("showAllAnswersBtn").addEventListener("click", () => {
+        const filtered = getFilteredBankQuestions();
+        filtered.forEach((q) => state.revealedAnswers.add(q.id));
+        renderQuestionsBank();
+      });
+
+      document.getElementById("hideAllAnswersBtn").addEventListener("click", () => {
+        state.revealedAnswers.clear();
+        state.bankTriedOptions = {};
+        renderQuestionsBank();
+      });
+
+      // Bank Search Input & Clear Button
+      const searchInput = document.getElementById("bankSearchInput");
+      const clearSearchBtn = document.getElementById("clearSearchBtn");
+      searchInput.addEventListener("input", (e) => {
+        state.bankSearch = e.target.value;
+        if (state.bankSearch.trim().length > 0) {
+          clearSearchBtn.classList.remove("hidden");
+        } else {
+          clearSearchBtn.classList.add("hidden");
+        }
+        renderQuestionsBank();
+      });
+
+      clearSearchBtn.addEventListener("click", () => {
+        state.bankSearch = "";
+        searchInput.value = "";
+        clearSearchBtn.classList.add("hidden");
+        renderQuestionsBank();
+      });
+
+      // Bank Topic Select
+      document.getElementById("topicFilterSelect").addEventListener("change", (e) => {
+        state.bankTopic = e.target.value;
+        renderQuestionsBank();
+      });
+
+      // Bonus PDF Pages 7-8 Toggle
+      const toggleBonusBtn = document.getElementById("toggleBonusNotesBtn");
+      const bonusContent = document.getElementById("bonusNotesContent");
+      toggleBonusBtn.addEventListener("click", () => {
+        const isHidden = bonusContent.classList.contains("hidden");
+        if (isHidden) {
+          bonusContent.classList.remove("hidden");
+          toggleBonusBtn.textContent = "Hide PDF Slides 7–8 Notes ▲";
+        } else {
+          bonusContent.classList.add("hidden");
+          toggleBonusBtn.textContent = "Show PDF Slides 7–8 Notes ▼";
+        }
+      });
+
+      // Delegated Actions in Questions Bank Container
+      document.getElementById("bankQuestionsContainer").addEventListener("click", (e) => {
+        const actionEl = e.target.closest("[data-action]");
+        if (!actionEl) return;
+        const action = actionEl.getAttribute("data-action");
+        const qid = actionEl.getAttribute("data-qid");
+
+        if (action === "toggle-answer" && qid) {
+          if (state.revealedAnswers.has(qid)) {
+            state.revealedAnswers.delete(qid);
+          } else {
+            state.revealedAnswers.add(qid);
+          }
+          renderQuestionsBank();
+        } else if (action === "bank-try-option" && qid) {
+          const optId = actionEl.getAttribute("data-optid");
+          state.bankTriedOptions[qid] = optId;
+          renderQuestionsBank();
+        } else if (action === "clear-tried" && qid) {
+          delete state.bankTriedOptions[qid];
+          renderQuestionsBank();
+        } else if (action === "toggle-bookmark" && qid) {
+          if (state.bookmarkedIds.has(qid)) {
+            state.bookmarkedIds.delete(qid);
+          } else {
+            state.bookmarkedIds.add(qid);
+          }
+          saveBookmarks();
+          renderQuestionsBank();
+        } else if (action === "reset-bank-filters") {
+          state.bankFilter = "ALL";
+          state.bankTopic = "ALL";
+          state.bankSearch = "";
+          searchInput.value = "";
+          document.getElementById("topicFilterSelect").value = "ALL";
+          clearSearchBtn.classList.add("hidden");
+          renderQuestionsBank();
+        }
+      });
+
+      // Quiz Setup Controls
+      document.getElementById("quizTypeSelector").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-quiz-type]");
+        if (!btn) return;
+        state.quizConfig.type = btn.getAttribute("data-quiz-type");
+        const maxPool = getQuizPoolByType(state.quizConfig.type).length;
+        if (state.quizConfig.count > maxPool) {
+          state.quizConfig.count = maxPool;
+        }
+        updateQuizSetupUI();
+      });
+
+      document.getElementById("quizCountPresets").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-count-preset]");
+        if (!btn || btn.disabled) return;
+        const raw = btn.getAttribute("data-count-preset");
+        const maxPool = getQuizPoolByType(state.quizConfig.type).length;
+        state.quizConfig.count = raw === "ALL" ? maxPool : Math.min(parseInt(raw, 10), maxPool);
+        updateQuizSetupUI();
+      });
+
+      const countSlider = document.getElementById("quizCountSlider");
+      const countInput = document.getElementById("quizCountInput");
+
+      countSlider.addEventListener("input", (e) => {
+        state.quizConfig.count = parseInt(e.target.value, 10) || 1;
+        updateQuizSetupUI();
+      });
+
+      countInput.addEventListener("input", (e) => {
+        const maxPool = getQuizPoolByType(state.quizConfig.type).length;
+        let val = parseInt(e.target.value, 10);
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > maxPool) val = maxPool;
+        state.quizConfig.count = val;
+        updateQuizSetupUI();
+      });
+
+      document.getElementById("startQuizBtn").addEventListener("click", () => {
+        buildRandomizedQuizSession();
+      });
+
+      // Active Quiz Controls
+      document.getElementById("quizQuestionPills").addEventListener("click", (e) => {
+        const pill = e.target.closest("[data-action='jump-quiz-question']");
+        if (!pill) return;
+        const idx = parseInt(pill.getAttribute("data-qindex"), 10);
+        if (!isNaN(idx) && idx >= 0 && idx < state.quizQuestions.length) {
+          state.quizCurrentIndex = idx;
+          renderActiveQuizQuestion();
+        }
+      });
+
+      document.getElementById("activeOptionsContainer").addEventListener("click", (e) => {
+        const optBtn = e.target.closest("[data-action='select-quiz-option']");
+        if (!optBtn) return;
+        const qid = optBtn.getAttribute("data-qid");
+        const optId = optBtn.getAttribute("data-optid");
+        state.quizUserAnswers[qid] = optId;
+        renderActiveQuizQuestion();
+      });
+
+      document.getElementById("prevQuestionBtn").addEventListener("click", () => {
+        if (state.quizCurrentIndex > 0) {
+          state.quizCurrentIndex--;
+          renderActiveQuizQuestion();
+        }
+      });
+
+      document.getElementById("nextQuestionBtn").addEventListener("click", () => {
+        if (state.quizCurrentIndex < state.quizQuestions.length - 1) {
+          state.quizCurrentIndex++;
+          renderActiveQuizQuestion();
+        }
+      });
+
+      document.getElementById("submitQuizBtn").addEventListener("click", () => {
+        attemptSubmitQuiz();
+      });
+
+      document.getElementById("quitQuizToSetupBtn").addEventListener("click", () => {
+        stopQuizTimer();
+        state.quizStage = "setup";
+        renderQuizView();
+      });
+
+      // Modal Controls
+      document.getElementById("cancelSubmitModalBtn").addEventListener("click", () => {
+        document.getElementById("submitConfirmModal").classList.add("hidden");
+      });
+
+      document.getElementById("confirmSubmitModalBtn").addEventListener("click", () => {
+        finalizeQuizSubmission();
+      });
+
+      // Results Screen Controls
+      document.getElementById("resultFilterTabs").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-result-filter]");
+        if (!btn) return;
+        state.resultFilter = btn.getAttribute("data-result-filter");
+        renderQuizResults();
+      });
+
+      document.getElementById("retrySameConfigBtn").addEventListener("click", () => {
+        buildRandomizedQuizSession();
+      });
+
+      document.getElementById("newQuizSetupBtn").addEventListener("click", () => {
+        state.quizStage = "setup";
+        renderQuizView();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      const dlBtn = document.getElementById("downloadIndexHtmlBtn");
+      if (dlBtn) {
+        dlBtn.addEventListener("click", () => {
+          const fullHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+          const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "index.html";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initExpertSystemsApp);
+    } else {
+      initExpertSystemsApp();
+    }
+  </script>
+</body>
+</html>
